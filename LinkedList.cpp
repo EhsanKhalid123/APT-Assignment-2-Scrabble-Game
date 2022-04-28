@@ -50,17 +50,17 @@ Tile* LinkedList::get(int index){
     return returnTile;
 }
 
-void LinkedList::add_front(Tile* data){
-   Node* node = new Node(data, head); // Not sure What parameteres to give this Node For now I gave random ones
+void LinkedList::add_front(Tile* tile){
+   Node* node = new Node(tile, nullptr);
    node->next = head;
-   node->tile = data;
+   node->tile = tile;
    head = node;
 }
 
-void LinkedList::add_back(Tile* data){
-   Node* node = new Node(data, head); // Not sure What parameteres to give this Node For now I gave random ones
+void LinkedList::add_back(Tile* tile){
+   Node* node = new Node(tile, nullptr);
    node->next = nullptr;
-   node->tile = data;
+   node->tile = tile;
 
    if (head == nullptr){
       head = node;
