@@ -5,7 +5,7 @@
 class Players {
 public:
 
-    Players(int playerNo);
+    Players(int playerNumber, std::string playerName);
     Players(Players &other);
     ~Players();
     
@@ -14,8 +14,13 @@ public:
      */
     std::string getPlayerName();
 
+    void setPlayerNumber(int playerNumber);
+
+    int getPlayerNumber();
+
 private:
     std::string playerName;
+    int playerNumber;
 
 };
 
