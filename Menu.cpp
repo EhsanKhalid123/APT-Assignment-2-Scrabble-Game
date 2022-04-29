@@ -48,12 +48,12 @@ void Menu::newGameMenu(){
 
     
     std::cout << "" << std::endl;
-    std::cout << "Enter a name for player 1 (uppercase characters only)" << std::endl;
+    std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
     Players* player1 = new Players(1, playerName);
 
     std::cout << "" << std::endl;
-    std::cout << "Enter a name for player 2 (uppercase characters only)" << std::endl;
+    std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
     Players* player2 = new Players(2, playerName2);
 
@@ -69,7 +69,7 @@ void Menu::newGameMenu(){
 
 void Menu::loadGameMenu(){
     std::cout << "" << std::endl;
-    std::cout << "Enter the filename from which load a game" << std::endl;
+    std::cout << "Enter the filename from which to load a game" << std::endl;
     std::cout << "> "; std::cin >> fileName;
 
     std::cout << "" << std::endl;
