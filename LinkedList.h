@@ -2,12 +2,15 @@
 #ifndef ASSIGN2_LINKEDLIST_H
 #define ASSIGN2_LINKEDLIST_H
 
+#include <iostream>
 #include "Node.h"
 
 class LinkedList {
 public:
    LinkedList();
+
    LinkedList(LinkedList &other);
+
    ~LinkedList();
 
    int size();
@@ -15,6 +18,7 @@ public:
    Tile* get(int index);
 
    void add_front(Tile* data);
+   
    void add_back(Tile* data);
 
    void remove_front();
@@ -25,8 +29,13 @@ public:
 
    void clear();
 
+   void display();
+
 private:
    Node* head;
+   Node* tail;
+   int length = 0;
+   // Node* prev;   Not used right
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

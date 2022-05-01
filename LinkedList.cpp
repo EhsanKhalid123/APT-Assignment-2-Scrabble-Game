@@ -1,9 +1,8 @@
 #include "LinkedList.h"
-#include <stdexcept>
 
 LinkedList::LinkedList() {
    head = nullptr;
-
+   tail = nullptr;
    // TODO
 }
 
@@ -21,8 +20,6 @@ LinkedList::~LinkedList(){
 }
 
 int LinkedList::size(){
-   int length = 0;
-
       Node* current = head;
       while(current != nullptr){
          ++length;
@@ -51,7 +48,7 @@ Tile* LinkedList::get(int index){
 }
 
 void LinkedList::add_front(Tile* tile){
-   Node* node = new Node(tile, nullptr);
+   Node* node = new Node(tile, head->next);
    node->next = head;
    node->tile = tile;
    head = node;
@@ -129,5 +126,13 @@ void LinkedList::remove(int index){
 void LinkedList::clear(){
    while (head != nullptr){
       remove_front();
+   }
+}
+
+void LinkedList::display(){
+   Node* start = head;
+   for (int i = 0; i < length; ++i){
+      std::cout<<"Tile "<<i<<": "<<start<<std::endl;
+      start = start->next;
    }
 }
