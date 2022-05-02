@@ -1,7 +1,6 @@
 #ifndef ASSIGN2_MENU_H
 #define ASSIGN2_MENU_H
 #include <map>
-#include "Players.h"
 
 class Menu {
 public:

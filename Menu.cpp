@@ -1,5 +1,5 @@
+#include "Player.cpp"
 #include "Menu.h"
-#include "Players.cpp"
 #include <iostream>
 #include <istream>
 #include <fstream>
@@ -45,17 +45,18 @@ void Menu::mainMenu(){
 void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
-
     
     std::cout << "" << std::endl;
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
-    Players* player1 = new Players(1, playerName);
+    LinkedList* hand1 = new LinkedList();
+    Player* player1 = new Player(playerName, 1, 0, hand1);
 
     std::cout << "" << std::endl;
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
-    Players* player2 = new Players(2, playerName2);
+    LinkedList* hand2 = new LinkedList();
+    Player* player2 = new Player(playerName2, 2, 0, hand2);
 
     std::cout << "" << std::endl;
     std::cout << "Let's Play!" << std::endl;
