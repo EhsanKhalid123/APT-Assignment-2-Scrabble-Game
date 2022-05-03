@@ -1,8 +1,6 @@
-#ifndef ASSIGN2_BOARD_H
-#define ASSIGN2_BOARD_H
+#include <iostream>
 #include "Board.h"
 // #include "Tile.h"
-#include <iostream>
 
 Board::Board(){
     for (int i = 0; i < ENV_DIM; ++i){
@@ -42,5 +40,3 @@ void Board::printBoard(){
         std::cout<<" |"<<std::endl;
     }
 }
-
-#endif // ASSIGN2_BOARD_H

@@ -104,6 +104,11 @@ void LinkedList::remove_back(){
     }
 }
 
+Tile* LinkedList::withdraw_front(){
+   return nullptr;
+}
+
+
 void LinkedList::remove(int index){
    Tile* returnTile = nullptr;
 

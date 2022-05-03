@@ -22,7 +22,6 @@ private:
     std::string playerName;
     std::string playerName2;
     std::string fileName;
-
 };
 
 #endif // ASSIGN2_MENU_H

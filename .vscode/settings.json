@@ -70,7 +70,8 @@
         "algorithm": "cpp",
         "functional": "cpp",
         "iterator": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "filesystem": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

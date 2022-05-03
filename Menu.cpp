@@ -3,6 +3,7 @@
 #include <iostream>
 #include <istream>
 #include <fstream>
+#include "GameEngine.cpp"
 
 Menu::Menu(){
 
@@ -47,19 +48,28 @@ void Menu::newGameMenu(){
     std::cout << "Starting a New Game" << std::endl;
     
     std::cout << "" << std::endl;
+    //Player Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
+
+    //Initialising a hand for a player
     LinkedList* hand1 = new LinkedList();
     Player* player1 = new Player(playerName, 1, 0, hand1);
 
     std::cout << "" << std::endl;
+
+    //Player Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
+
+    //Initialising a hand for a player
     LinkedList* hand2 = new LinkedList();
     Player* player2 = new Player(playerName2, 2, 0, hand2);
 
     std::cout << "" << std::endl;
     std::cout << "Let's Play!" << std::endl;
+
+    GameEngine* gameEngine = new GameEngine(player1, hand1, player2, hand2);
 
     // These will be used later to display the names of the person who has the turn
     std::cout << "" << std::endl;

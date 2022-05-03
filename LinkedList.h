@@ -25,6 +25,8 @@ public:
 
    void remove_back();
 
+   Tile* withdraw_front();
+
    void remove(int index);
 
    void clear();

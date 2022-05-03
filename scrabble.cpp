@@ -1,12 +1,13 @@
 
 #include "LinkedList.h"
-#include "Menu.h"
+#include "Menu.cpp"
 #include "Player.h"
 #include "TestTile.cpp"
 #include "TestNode.cpp"
 #include "TestLinkedList.cpp"
 #include "TestPlayer.cpp"
-#include "Board.cpp"
+// #include "Board.cpp"
+#include "TileBag.cpp"
 
 #include <iostream>
 
@@ -19,11 +20,8 @@ int main(void) {
    std::cout << "Welcome to Scrabble!" << std::endl;
    std::cout << "--------------------" << std::endl;
 
-   Board* board1 = new Board();   
-   board1->printBoard();
-
-   // Menu* mainMenu = new Menu();
-   // mainMenu->mainMenu();
+   Menu* mainMenu = new Menu();
+   mainMenu->mainMenu();
    
    // TestTile* testTile = new TestTile('A', 1);
    // Tile* tile = new Tile('B', 2);
