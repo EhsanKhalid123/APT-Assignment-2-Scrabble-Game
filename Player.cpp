@@ -55,3 +55,7 @@ LinkedList* Player::getPlayerHand(){
 void Player::setPlayerHand(LinkedList* hand){
     this->hand = hand;
 }
+
+void Player::placesTile(Tile* tile, Location* location){
+    
+}

@@ -2,6 +2,7 @@
 #define ASSIGN2_Player_H
 #include <string>
 #include "LinkedList.h"
+#include "Location.h"
 
 class Player {
 public:
@@ -28,7 +29,7 @@ public:
 
     void setPlayerHand(LinkedList* hand);
 
-    // void placesTile();
+    void placesTile(Tile* tile, Location* location);
 
     void replaceTile();
 
