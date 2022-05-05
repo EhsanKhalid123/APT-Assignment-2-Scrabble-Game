@@ -5,6 +5,9 @@
 #include <fstream>
 #include "GameEngine.cpp"
 
+#include <algorithm>
+#include <cctype>
+
 Menu::Menu(){
 
 }
@@ -43,6 +46,13 @@ void Menu::mainMenu(){
 
 }
 
+char Menu::changeToUpper (char playerName) {
+    if (std::islower(playerName)) 
+        return std::toupper(playerName); 
+    else
+        return std::toupper(playerName); 
+}
+
 void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
@@ -51,6 +61,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
+    std::transform(playerName.begin(), playerName.end(), playerName.begin(), changeToUpper);
 
     //Initialising a hand for a player
     LinkedList* hand1 = new LinkedList();
@@ -61,6 +72,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
+    std::transform(playerName2.begin(), playerName2.end(), playerName2.begin(), changeToUpper);
 
     //Initialising a hand for a player
     LinkedList* hand2 = new LinkedList();
