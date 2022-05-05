@@ -1,5 +1,4 @@
 #include <Location.h>
-#include "Board.cpp"
 
 Location::Location(int x, int y){
     this->x = x;

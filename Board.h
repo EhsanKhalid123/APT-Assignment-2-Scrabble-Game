@@ -13,9 +13,9 @@ public:
 
     void printBoard();
 
+    Env env;
 private:
     std::vector<Board*> tile;
-    Env env;
 };
 
 // #endif // ASSIGN2_BOARD_H

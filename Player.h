@@ -29,11 +29,13 @@ public:
 
     void setPlayerHand(LinkedList* hand);
 
-    void placesTile(Tile* tile, Location* location);
+    void placesTile(Tile* tile, int row, int col);
 
     void replaceTile();
 
     void addTile();
+
+    void TilesonPlayersHands(Player* player);
 private:
     std::string playerName;
     int playerNumber;

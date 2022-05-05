@@ -1,3 +1,5 @@
+#ifndef ASSIGN2_LOCATION_H
+#define ASSIGN2_LOCATION_H
 #include <iostream>
 
 class Location{
@@ -11,3 +13,4 @@ class Location{
     private:
         int x,y;
 };
+#endif //ASSIGN2_LOCATION_H

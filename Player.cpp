@@ -56,6 +56,13 @@ void Player::setPlayerHand(LinkedList* hand){
     this->hand = hand;
 }
 
-void Player::placesTile(Tile* tile, Location* location){
+void Player::placesTile(Tile* tile, int row, int col){
     
+}
+
+void Player::TilesonPlayersHands(Player* player){
+    for (int i = 0; i < 7; ++i){
+        std::cout<<player->getPlayerHand()->get(i)->getLetter()<<"-"<<player->getPlayerHand()->get(i)->getValue()<<", ";
+    }
+    std::cout<<"\n"<<std::endl;
 }

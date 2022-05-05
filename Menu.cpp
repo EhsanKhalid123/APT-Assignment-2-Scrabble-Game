@@ -69,7 +69,7 @@ void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Let's Play!" << std::endl;
 
-    GameEngine* gameEngine = new GameEngine(player1, hand1, player2, hand2);
+    GameEngine* gameEngine = new GameEngine(player1, player2);
 
     // These will be used later to display the names of the person who has the turn
     std::cout << "" << std::endl;
