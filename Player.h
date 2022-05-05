@@ -34,6 +34,8 @@ public:
     void replaceTile();
 
     void addTile();
+
+    void displayHand(LinkedList* hand);
 private:
     std::string playerName;
     int playerNumber;

@@ -71,10 +71,10 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
     int playerTwoScore = player2->getPlayerScore();
 
     if (playerOneScore > playerTwoScore){
-        std::cout<<"Player "<<player1->getPlayerName()<< "won!"<<std::endl;
+        std::cout<<"Player "<<player1->getPlayerName()<< " won!"<<std::endl;
     }
     else{
-        std::cout<<"Player "<<player2->getPlayerName()<< "won!"<<std::endl;
+        std::cout<<"Player "<<player2->getPlayerName()<< " won!"<<std::endl;
     }
 
     std::cout<<"Goodbye 😄"<<std::endl;

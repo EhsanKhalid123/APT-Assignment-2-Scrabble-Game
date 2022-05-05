@@ -59,3 +59,7 @@ void Player::setPlayerHand(LinkedList* hand){
 void Player::placesTile(Tile* tile, Location* location){
     
 }
+
+void Player::displayHand(LinkedList* hand){
+
+}
