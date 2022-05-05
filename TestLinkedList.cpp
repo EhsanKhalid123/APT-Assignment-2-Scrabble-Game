@@ -4,7 +4,7 @@
 class TestLinkedList{
     public:
         TestLinkedList(){
-            std::cout<<"<<<<<<<< Testing NodeList >>>>>>>>"<<std::endl;
+            std::cout<<"<<<<<<<< Testing LinkedList >>>>>>>>"<<std::endl;
             //4 Tiles
             Tile* tile1 = new Tile('P', 1);
             Tile* tile2 = new Tile('Q', 2);
@@ -15,31 +15,43 @@ class TestLinkedList{
             LinkedList* sll = new LinkedList();
 
             //Tiles added as 1, 2, 3, 4
-            sll->add_front(tile2);
             sll->add_back(tile3);
-            sll->add_front(tile1);
+            sll->add_front(tile2);
             sll->add_back(tile4);
+            sll->add_front(tile1);
 
-            //display as 1, 2, 3, 4
+            //display as P, Q, R, S
             sll->display();
 
-        //     //Printing 2nd Tile Data
-        //     std::cout<<"2nd Letter: "<<sll->get(1)->getLetter()<<"\n2nd Value: "<<sll->get(1)->getValue()<<std::endl;
+            //Length 4
+            std::cout<<sll->size()<<std::endl;
 
-        //     //1 and 4 deleted
-        //     sll->remove_front();
-        //     sll->remove_back();
+            //Printing 2nd Tile Data
+            std::cout<<"2nd Letter: "<<sll->get(1)->getLetter()<<"\n2nd Value: "<<sll->get(1)->getValue()<<std::endl;
 
-        //     //Length: 2
-        //     std::cout<<"Length: "<<sll->size()<<std::endl;
+            //Removes 2nd Tile
+            // sll->remove(1);
+            // sll->display();
 
-        //     //2 and 3 displayed
-        //     sll->display();
+            //Clear the LinkedList
+            // sll->clear();
+            // std::cout<<sll->size()<<std::endl;
+            
+            //1 and 4 deleted
+            // sll->remove_front();
+            // sll->remove_back();
+            // sll->display();
 
-        //     //3 deleted
-        //     sll->remove(1);
+            //Length 2
+            // std::cout<<sll->size()<<std::endl;
 
-        //     //2 displayed
-        //     sll->display();
+
+            //Withdraw front
+            // std::cout<<"Letter withdrawn: "<<sll->withdraw_front()->getLetter()<<std::endl;
+            // sll->display();
+            // std::cout<<sll->size()<<std::endl;
+
+            //
+
         }
 };

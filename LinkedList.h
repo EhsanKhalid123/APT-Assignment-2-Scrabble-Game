@@ -37,7 +37,6 @@ private:
    Node* head;
    Node* tail;
    int length = 0;
-   // Node* prev;   Not used right
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
