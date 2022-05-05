@@ -5,6 +5,9 @@
 #include <fstream>
 #include "GameEngine.cpp"
 
+#include <algorithm>
+#include <cctype>
+
 Menu::Menu(){
 
 }
@@ -43,6 +46,19 @@ void Menu::mainMenu(){
 
 }
 
+void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
+
+    for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
+        while(islower(*pName)){
+            std::cout << "" << std::endl;
+            std::cout << "Please Enter Only Uppercase Characters!" << std::endl;
+            std::cout << "" << std::endl;
+            std::cout << "Enter a name for "<< playerNumber << " (uppercase characters only)" << std::endl;
+            std::cout << "> "; std::cin >> playerName;
+        }
+    }
+}
+
 void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
@@ -51,6 +67,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
+    checkForLower(playerName, "Player 1");
 
     //Initialising a hand for a player
     LinkedList* hand1 = new LinkedList();
@@ -61,6 +78,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
+    checkForLower(playerName2, "Player 2");
 
     //Initialising a hand for a player
     LinkedList* hand2 = new LinkedList();
