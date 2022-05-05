@@ -17,7 +17,7 @@ public:
 
     void creditsMenu();
 
-    static char changeToUpper (char playerName);
+    static void checkForLower (std::string &playerName, std::string playerNumber);
 
 private:
     int userMenuInput;

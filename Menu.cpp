@@ -46,11 +46,17 @@ void Menu::mainMenu(){
 
 }
 
-char Menu::changeToUpper (char playerName) {
-    if (std::islower(playerName)) 
-        return std::toupper(playerName); 
-    else
-        return std::toupper(playerName); 
+void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
+
+    for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
+        while(islower(*pName)){
+            std::cout << "" << std::endl;
+            std::cout << "Please Enter Only Uppercase" << std::endl;
+            std::cout << "" << std::endl;
+            std::cout << "Enter a name for "<< playerNumber << " (uppercase characters only)" << std::endl;
+            std::cout << "> "; std::cin >> playerName;
+        }
+    }
 }
 
 void Menu::newGameMenu(){
@@ -61,7 +67,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;
-    std::transform(playerName.begin(), playerName.end(), playerName.begin(), changeToUpper);
+    checkForLower(playerName, "Player 1");
 
     //Initialising a hand for a player
     LinkedList* hand1 = new LinkedList();
@@ -72,7 +78,7 @@ void Menu::newGameMenu(){
     //Player Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;
-    std::transform(playerName2.begin(), playerName2.end(), playerName2.begin(), changeToUpper);
+    checkForLower(playerName2, "Player 2");
 
     //Initialising a hand for a player
     LinkedList* hand2 = new LinkedList();
