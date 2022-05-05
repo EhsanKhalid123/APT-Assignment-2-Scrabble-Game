@@ -51,7 +51,7 @@ void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
     for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
         while(islower(*pName)){
             std::cout << "" << std::endl;
-            std::cout << "Please Enter Only Uppercase" << std::endl;
+            std::cout << "Please Enter Only Uppercase Characters!" << std::endl;
             std::cout << "" << std::endl;
             std::cout << "Enter a name for "<< playerNumber << " (uppercase characters only)" << std::endl;
             std::cout << "> "; std::cin >> playerName;
