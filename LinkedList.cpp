@@ -58,6 +58,7 @@ void LinkedList::add_front(Tile* tile){
    else{
       node = new Node(tile, head, nullptr);
       head = node;
+      head->prev = nullptr;
       ++length;
    }
 }
@@ -69,26 +70,32 @@ void LinkedList::add_back(Tile* tile){
       node = new Node(tile, nullptr, nullptr);
       head = node;
       tail = node;
-      ++length;
    }
    else{
-      node = new Node(tile, nullptr, tail);
-      tail->next = node;
-      tail = node;
-      ++length;
+      Node * upto = this->head;
+ 
+        while (upto->next != nullptr) 
+        {
+            upto = upto->next;
+        }
+        upto->next = new Node(tile, nullptr, upto);
+        this->tail = upto->next;
    }
+   ++length;
 }
 
 //Deletes Tiles from front
 void LinkedList::remove_front(){
+   Node* tmp = head;
    if (head != nullptr){
       head = head->next;
+      head->prev = nullptr;
+      tmp->next = nullptr;
       --length;
    }
    else{
       std::cout<<"List Empty"<<std::endl;
    }
-   
 }
 
 //Deletes Tiles from Back
@@ -121,39 +128,83 @@ Tile* LinkedList::withdraw_front(){
 void LinkedList::remove(int index){
 
    //If index is larger than size
-   if(index >= length){
-      std::cout<<"Invalid Input"<<std::endl;
-   }
+   // if(index >= length){
+   //    std::cout<<"Invalid Input"<<std::endl;
+   // }
+   // else{
+   //    if(index == 0){
+   //       remove_front();
+   //    }
+      
+   //    else if(index == length-1){
+   //       remove_back();
+   //    }
 
-   if(index == 0){
-      remove_front();
-   }
-   
-   else if(index == length-1){
-      remove_back();
-   }
+   //    else{
+   //       // Node* upto = head;
+   //       // for(int i = 0; i < index; ++i){
+   //       //    upto = upto->next;
+   //       // }
+   //       // std::cout<<upto->tile->getLetter()<<std::endl;
 
-   else{
-      Node *upto = head;
-      for(int i = 0; i < index; ++i){
-         upto = upto->next;
+   //       // Node* nodeBefore = upto->prev;
+   //       // std::cout<<"Node Before: "<<upto->prev->tile->getLetter()<<std::endl;
+   //       // Node* nodeAfter = upto->next;
+   //       // std::cout<<"Node After: "<<nodeAfter->tile->getLetter()<<std::endl;
+   //       // nodeBefore->next = nodeAfter;
+   //       // nodeAfter->prev = nodeBefore;
+   //       // // upto->next=nullptr;
+   //       // // upto->prev=nullptr;
+
+   //       // // Note that removeFront and removeBack methods also subtract
+   //       // // size by one in its own implementation
+   //       // --length;
+   //       // std::cout<<"Line 156"<<std::endl;
+   //       Node *upto = head;
+   //       std::cout<<"Line 45"<<std::endl;
+   //       for(int i = 0; i < index; ++i){
+   //             upto = upto->next;
+   //       }
+   //       Node* nodeBefore = (upto->prev);
+   //       nodeBefore->next = upto->next;
+
+   //       Node* to_be_deleted = upto;
+   //       Node* nodeAfter = upto->next;
+   //       delete to_be_deleted;
+
+   //       nodeAfter->prev = nodeBefore;
+
+   //       // Note that removeFront and removeBack methods also subtract
+   //       // size by one in its own implementation
+   //       length--;
+   //    }
+   // }
+   if (index >= 0 && index < size()) {
+      if (head != nullptr) {
+         int counter = 0;
+         Node* current = head;
+         Node* prevNode = nullptr;
+
+         while (counter != index) {
+            ++counter;
+            prevNode = current;
+            current = current->next;
+         }
+
+         if (prevNode == nullptr) {
+            remove_front();
+         }
+         else if (current->next == nullptr) {
+            remove_back();
+         }
+         else {
+            prevNode->next = current->next;
+            current->next->prev = prevNode;
+            delete current;
+            --length;
+         }
       }
-
-      Node* nodeBefore = upto->prev;
-      nodeBefore->next = upto->next;
-
-      // Node* to_be_deleted = upto;
-      Node* nodeAfter = upto->next;
-      // delete to_be_deleted;
-      upto->next = nullptr;
-
-      nodeAfter->prev = nodeBefore;
-
-      // Note that removeFront and removeBack methods also subtract
-      // size by one in its own implementation
-      --length;
-    }
-   //  return;
+   }
 }
 
 //Clears the LinkedList

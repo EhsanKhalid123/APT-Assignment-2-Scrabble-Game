@@ -20,6 +20,7 @@ class GameEngine{
         bool checkBoardCoordinates(std::string input);
         int convertChartoInt(char c);
         void playerPrompt(Player* player1, Player* player2);
+        Tile* getTileFromHand(char tileLetter, Player* player);
 
     private:
         TileBag* tileBag;

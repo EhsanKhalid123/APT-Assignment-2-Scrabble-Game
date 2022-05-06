@@ -11,11 +11,13 @@ public:
 
     ~Board();
 
+    void updateBoard(Tile* tile, int row, int col);
+
     void printBoard();
 
-    Env env;
+    // Env env;
 private:
-    std::vector<Board*> tile;
+    std::vector<std::vector<Tile*> > board;
 };
 
 // #endif // ASSIGN2_BOARD_H

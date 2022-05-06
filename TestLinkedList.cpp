@@ -10,6 +10,10 @@ class TestLinkedList{
             Tile* tile2 = new Tile('Q', 2);
             Tile* tile3 = new Tile('R', 3);
             Tile* tile4 = new Tile('S', 4);
+            Tile* tile5 = new Tile('T', 5);
+            Tile* tile6 = new Tile('U', 6);
+            Tile* tile7 = new Tile('V', 7);
+
 
             //singly linked list
             LinkedList* sll = new LinkedList();
@@ -19,15 +23,24 @@ class TestLinkedList{
             sll->add_front(tile2);
             sll->add_back(tile4);
             sll->add_front(tile1);
+            sll->add_back(tile5);
+            sll->add_back(tile6);
+            sll->add_back(tile7);
+
+            // sll->remove_front();
 
             //display as P, Q, R, S
             sll->display();
 
+            sll->remove(0);
+
+            sll->display();
+
             //Length 4
-            std::cout<<sll->size()<<std::endl;
+            // std::cout<<sll->size()<<std::endl;
 
             //Printing 2nd Tile Data
-            std::cout<<"2nd Letter: "<<sll->get(1)->getLetter()<<"\n2nd Value: "<<sll->get(1)->getValue()<<std::endl;
+            // std::cout<<"2nd Letter: "<<sll->get(1)->getLetter()<<"\n2nd Value: "<<sll->get(1)->getValue()<<std::endl;
 
             //Removes 2nd Tile
             // sll->remove(1);

@@ -6,7 +6,7 @@
 #define ENV_DIM     15
 
         
-typedef std::vector<std::vector<Tile*>> Env;
+// typedef std::vector<std::vector< Tile* > > Env;
 
 char cols[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
 

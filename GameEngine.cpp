@@ -64,12 +64,15 @@ void GameEngine::playerPrompt(Player* player1, Player* player2){
     std::cout<<"Your hand is"<<std::endl;
     player1->TilesonPlayersHands(player1);
 
+    int placingCounter = 0;
+    
     //User placing tiles with command loop
     bool placeDone = false;
     while (placeDone == false){
         std::string input;
         std::cout<<"> ";
         getline(std::cin>>std::ws, input);
+
 
         //For place Done
         if (input == "place Done"){
@@ -83,32 +86,73 @@ void GameEngine::playerPrompt(Player* player1, Player* player2){
 
         //For Replacing
         else if ((input.substr(0, 7) == "replace") && checksLetterinHand(input[8], player1->getPlayerHand())){
-            std::cout<<"replace"<<std::endl;
+            
+            //Tile to Remove
+            Tile* tileToRemove = getTileFromHand(input[8], player1);
+
+            //setting tiles on hand again
+            player1->getPlayerHand()->add_back(tileBag->getTile());
+
+            //adds the tile from players hand to the tile bag
+            tileBag->addTile(tileToRemove);
+
         }
 
         //For Placing
         //Checks if the input tile is in players hand or not
         else if (checkInputforPlacing(input, player1->getPlayerHand())){
+            if(placingCounter < 7){
+                ++placingCounter;
 
-            //Getting Tile for that particular letter
-            Letter tileLetter = input[6];
-            int index = convertChartoInt(tileLetter);
-            Tile* tileToPlace = player1->getPlayerHand()->get(index);
+                Tile* tileToPlace = getTileFromHand(input[6], player1);
 
-            //Setting rows, cols for positioning the Tile
-            int col = convertChartoInt(input[11]);
-            int row = input[12];
+                //Setting rows, cols for positioning the Tile
+                int col = convertChartoInt(input[11]);
+                int row = (int)input[12] - 48;
 
-            // Location* location = new Location(row, col);
+                //Placing Tile on Board
+                newBoard->updateBoard(tileToPlace, row, col);
 
-            //Placing Tile on Board
-            player1->placesTile(tileToPlace, row, col);
+                //Player's Score update
+                player1->setPlayerScore(player1->getPlayerScore() + 1);
+
+                //Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
+                player1->getPlayerHand()->add_back(tileBag->getTile());
+            }
+            else{
+                std::cout<<"placed all Tiles"<<std::endl;
+            }
         }
         else{
-            std::cout<<"Invalid input"<<std::endl;
+            std::cout<<"Invalid Input"<<std::endl;
         }
     }
 }
+
+Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
+    Tile* tileToPlace = new Tile('-', -1);
+    std::cout<<"Letter: "<<tileLetter<<std::endl;
+
+    //Getting Tile for that particular letter
+    for (int i = 0; i < 7; ++i){
+        if (tileLetter == player1->getPlayerHand()->get(i)->getLetter()){
+            std::cout<<"line 130: "<<i<<std::endl;
+
+            //Sets the tile from hand to tileToPlace
+            // tileToPlace = player1->getPlayerHand()->get(i);
+            tileToPlace->setLetter(player1->getPlayerHand()->get(i)->getLetter());
+            tileToPlace->setValue(player1->getPlayerHand()->get(i)->getValue());
+            
+            //And deletes the tile too
+            std::cout<<"Index: "<<i<<std::endl;
+            player1->getPlayerHand()->remove(i);
+            std::cout<<"Tile To Place: "<<tileToPlace->getLetter()<<std::endl;
+            return tileToPlace;
+        }
+    }
+    return tileToPlace;
+}
+
 
 //Displays the Ending Messages
 void GameEngine::gameEnds(Player* player1, Player* player2){
@@ -129,13 +173,13 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
     std::cout<<"Goodbye 😄"<<std::endl;
 }
 
-//Validates Input
-bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
 
+//Validates Input in 3 ways: Placed Tile should be in Hands, Command should be correctly formatted,
+//Coordinates given should legal
+bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
     if(checkBoardCoordinates(input) && checksLetterinHand(input[6], hand) && checksString(input)){
         return true;
     }
-    std::cout<<"Input Error 130"<<std::endl;
     return false;
 }
 
@@ -148,7 +192,6 @@ bool GameEngine::checkRow(std::string input){
             return true;
         }
     }
-    std::cout<<"Input Error 142"<<std::endl;
     return false;
 }
 
@@ -160,7 +203,6 @@ bool GameEngine::checkCol(char col){
             return true;
         }
     }
-    std::cout<<"Input Error 154"<<std::endl;
     return false;
 }
 
@@ -171,7 +213,6 @@ bool GameEngine::checkBoardCoordinates(std::string input){
     if(checkRow(input) && checkCol(input[11])){
         return true;
     }
-    std::cout<<"Input Error 164"<<std::endl;
     return false;
 }
 
@@ -181,7 +222,6 @@ bool GameEngine::checksString(std::string input){
     if ((input.substr(0,5).compare("place") == 0) && (input.substr(8,2).compare("at") == 0)){
         return true;
     }
-    std::cout<<"Input Error 174"<<std::endl;
     return false;
 }
 
@@ -193,17 +233,18 @@ bool GameEngine::checksLetterinHand(char c, LinkedList* hand){
             return true;
         }
     }
-    std::cout<<"Input Error"<<std::endl;
     return false;
 }
 
+
 //Convert character to integer value
 int GameEngine::convertChartoInt(char c){
-    int i=0;
+    int j=0;
     for (char i = 'A'; i <= c; i++){
-        ++i;
+        ++j;
+        std::cout<<"i: "<<j<<std::endl;
     }
-    return i;
+    return j;
 }
 
 

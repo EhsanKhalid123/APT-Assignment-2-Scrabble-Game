@@ -56,9 +56,9 @@ void Player::setPlayerHand(LinkedList* hand){
     this->hand = hand;
 }
 
-void Player::placesTile(Tile* tile, int row, int col){
-    
-}
+// void Player::placesTile(Board* newBoard, Tile* tile, int row, int col){
+//     newBoard->env[row][col] = tile;
+// }
 
 void Player::TilesonPlayersHands(Player* player){
     for (int i = 0; i < 7; ++i){

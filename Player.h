@@ -3,6 +3,7 @@
 #include <string>
 #include "LinkedList.h"
 #include "Location.h"
+// #include "Board.h"
 
 class Player {
 public:
@@ -29,9 +30,7 @@ public:
 
     void setPlayerHand(LinkedList* hand);
 
-    void placesTile(Tile* tile, int row, int col);
-
-    void replaceTile();
+    // void placesTile(Board* newBoard, Tile* tile, int row, int col);
 
     void addTile();
 
