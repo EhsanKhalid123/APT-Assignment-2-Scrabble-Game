@@ -1,8 +1,4 @@
 #include "GameEngine.h"
-// #include "Board.h"
-// #include "TileBag.h"
-// #include <istream>
-
 
 //Constructor for New Game only
 GameEngine::GameEngine(Player* player1, Player* player2 ){
@@ -38,13 +34,11 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
         else{
             //Checking for Turns
             if (playerOneChance == true){
-                std::cout<<"\n\nNEW PLAYER\n\n"<<std::endl;
                 playerPrompt(player1, player2);
                 playerOneChance = false;
                 playerTwoChance = true;
             }
             else{
-                std::cout<<"\n\nNEW PLAYER\n\n"<<std::endl;
                 playerPrompt(player2, player1); 
                 playerOneChance = true;
                 playerTwoChance = false;
@@ -66,7 +60,7 @@ void GameEngine::playerPrompt(Player* player1, Player* player2){
 
     int placingCounter = 0;
     
-    //User placing tiles with command loop
+    //User placing tiles with command (loop)
     bool placeDone = false;
     while (placeDone == false){
         std::string input;
@@ -130,23 +124,18 @@ void GameEngine::playerPrompt(Player* player1, Player* player2){
 }
 
 Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
-    Tile* tileToPlace = new Tile('-', -1);
-    std::cout<<"Letter: "<<tileLetter<<std::endl;
+    Tile* tileToPlace = new Tile('!', -1);
 
     //Getting Tile for that particular letter
     for (int i = 0; i < 7; ++i){
         if (tileLetter == player1->getPlayerHand()->get(i)->getLetter()){
-            std::cout<<"line 130: "<<i<<std::endl;
 
             //Sets the tile from hand to tileToPlace
-            // tileToPlace = player1->getPlayerHand()->get(i);
             tileToPlace->setLetter(player1->getPlayerHand()->get(i)->getLetter());
             tileToPlace->setValue(player1->getPlayerHand()->get(i)->getValue());
             
             //And deletes the tile too
-            std::cout<<"Index: "<<i<<std::endl;
             player1->getPlayerHand()->remove(i);
-            std::cout<<"Tile To Place: "<<tileToPlace->getLetter()<<std::endl;
             return tileToPlace;
         }
     }
@@ -242,7 +231,6 @@ int GameEngine::convertChartoInt(char c){
     int j=0;
     for (char i = 'A'; i <= c; i++){
         ++j;
-        std::cout<<"i: "<<j<<std::endl;
     }
     return j;
 }

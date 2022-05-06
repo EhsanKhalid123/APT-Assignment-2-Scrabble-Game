@@ -28,19 +28,14 @@ int LinkedList::size(){
 //Gets Tile from a particular index
 Tile* LinkedList::get(int index){
    Tile* returnTile = nullptr;
-
     if(index >= 0 && index < size()){
-
         int counter = 0;
         Node* current = head;
-
         while(counter<index){
             ++counter;
             current = current->next;
         }
-
         returnTile = current->tile;
-
     }
     return returnTile;
 }
@@ -126,59 +121,6 @@ Tile* LinkedList::withdraw_front(){
 
 //Removes the Tile from a particular index
 void LinkedList::remove(int index){
-
-   //If index is larger than size
-   // if(index >= length){
-   //    std::cout<<"Invalid Input"<<std::endl;
-   // }
-   // else{
-   //    if(index == 0){
-   //       remove_front();
-   //    }
-      
-   //    else if(index == length-1){
-   //       remove_back();
-   //    }
-
-   //    else{
-   //       // Node* upto = head;
-   //       // for(int i = 0; i < index; ++i){
-   //       //    upto = upto->next;
-   //       // }
-   //       // std::cout<<upto->tile->getLetter()<<std::endl;
-
-   //       // Node* nodeBefore = upto->prev;
-   //       // std::cout<<"Node Before: "<<upto->prev->tile->getLetter()<<std::endl;
-   //       // Node* nodeAfter = upto->next;
-   //       // std::cout<<"Node After: "<<nodeAfter->tile->getLetter()<<std::endl;
-   //       // nodeBefore->next = nodeAfter;
-   //       // nodeAfter->prev = nodeBefore;
-   //       // // upto->next=nullptr;
-   //       // // upto->prev=nullptr;
-
-   //       // // Note that removeFront and removeBack methods also subtract
-   //       // // size by one in its own implementation
-   //       // --length;
-   //       // std::cout<<"Line 156"<<std::endl;
-   //       Node *upto = head;
-   //       std::cout<<"Line 45"<<std::endl;
-   //       for(int i = 0; i < index; ++i){
-   //             upto = upto->next;
-   //       }
-   //       Node* nodeBefore = (upto->prev);
-   //       nodeBefore->next = upto->next;
-
-   //       Node* to_be_deleted = upto;
-   //       Node* nodeAfter = upto->next;
-   //       delete to_be_deleted;
-
-   //       nodeAfter->prev = nodeBefore;
-
-   //       // Note that removeFront and removeBack methods also subtract
-   //       // size by one in its own implementation
-   //       length--;
-   //    }
-   // }
    if (index >= 0 && index < size()) {
       if (head != nullptr) {
          int counter = 0;
