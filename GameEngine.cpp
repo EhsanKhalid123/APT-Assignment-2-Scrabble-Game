@@ -124,43 +124,41 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
         //For Placing
         //Checks if the input tile is in players hand or not
         else if (checkInputforPlacing(input, player1->getPlayerHand())){
-            if(placingCounter < 7){
+            //If the Player places Tiles, then its Pass counter will become 0 again
+            player1->setPassCounter(0);
+            ++placingCounter;
 
-                //If the Player places Tiles, then its Pass counter will become 0 again
-                player1->setPassCounter(0);
-                ++placingCounter;
+            Tile* tileToPlace = getTileFromHand(input[6], player1);
 
-                Tile* tileToPlace = getTileFromHand(input[6], player1);
-
-                //Setting rows, cols for positioning the Tile
-                int col = convertChartoInt(input[11]);
-                int row;
-                if (input.size() == 14){
-                    row = ((int)input[12] - 48)*10 + (int)input[13]-48;
-                }
-                else{
-                    row = (int)input[12] - 48;
-                }
-                
-                //Placing Tile on Board
-                newBoard->updateBoard(tileToPlace, row, col);
-
-                //Getting Tile Value
-                int tileScore = tileToPlace->getValue();
-
-                //Player's Score update
-                player1->setPlayerScore(player1->getPlayerScore() + tileScore);
-
-                //Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
-                player1->getPlayerHand()->add_back(tileBag->getTile());
+            //Setting rows, cols for positioning the Tile
+            int col = convertChartoInt(input[11]);
+            int row;
+            if (input.size() == 14){
+                row = ((int)input[12] - 48)*10 + (int)input[13]-48;
             }
             else{
-                std::cout<<"placed all Tiles"<<std::endl;
+                row = (int)input[12] - 48;
             }
+            
+            //Placing Tile on Board
+            newBoard->updateBoard(tileToPlace, row, col);
+
+            //Getting Tile Value
+            int tileScore = tileToPlace->getValue();
+
+            //Player's Score update
+            player1->setPlayerScore(player1->getPlayerScore() + tileScore);
+
+            //Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
+            player1->getPlayerHand()->add_back(tileBag->getTile());
         }
+        
+        else if(!checksLetterinHand(input[6], player1->getPlayerHand())){
+            std::cout<<"Tile is not in Hand"<<std::endl;
+        }
+
         else{
             std::cout<<"Invalid Input"<<std::endl;
-            return false;
         }
     }
     return false;
