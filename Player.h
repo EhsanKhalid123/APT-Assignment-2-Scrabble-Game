@@ -30,8 +30,10 @@ public:
 
     void setPlayerHand(LinkedList* hand);
 
-    // void placesTile(Board* newBoard, Tile* tile, int row, int col);
+    void setPassCounter(int passCounter);
 
+    int getPassCounter();
+    
     void addTile();
 
     void TilesonPlayersHands(Player* player);
@@ -40,6 +42,7 @@ private:
     int playerNumber;
     int scores = 0;
     LinkedList* hand;
+    int passCounter = 0;
 };
 
 #endif // ASSIGN2_Player_H

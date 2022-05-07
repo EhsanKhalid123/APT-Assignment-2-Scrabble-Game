@@ -52,6 +52,15 @@ LinkedList* Player::getPlayerHand(){
     return hand;
 }
 
+void Player::setPassCounter(int passCounter){
+    this->passCounter = passCounter;
+}
+
+int Player::getPassCounter(){
+    return this->passCounter;
+}
+
+
 void Player::setPlayerHand(LinkedList* hand){
     this->hand = hand;
 }

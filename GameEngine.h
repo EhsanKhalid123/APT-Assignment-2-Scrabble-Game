@@ -19,7 +19,7 @@ class GameEngine{
         bool checksLetterinHand(char c, LinkedList* hand);
         bool checkBoardCoordinates(std::string input);
         int convertChartoInt(char c);
-        void playerPrompt(Player* player1, Player* player2);
+        bool playerPrompt(Player* player1, Player* player2);
         Tile* getTileFromHand(char tileLetter, Player* player);
 
     private:
