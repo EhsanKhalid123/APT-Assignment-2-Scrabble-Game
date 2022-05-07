@@ -70,8 +70,9 @@ void Player::setPlayerHand(LinkedList* hand){
 // }
 
 void Player::TilesonPlayersHands(Player* player){
-    for (int i = 0; i < 7; ++i){
-        std::cout<<player->getPlayerHand()->get(i)->getLetter()<<"-"<<player->getPlayerHand()->get(i)->getValue()<<", ";
+    std::cout<<player->getPlayerHand()->get(0)->getLetter()<<"-"<<player->getPlayerHand()->get(0)->getValue();
+    for (int i = 1; i < 7; ++i){
+        std::cout<<", "<<player->getPlayerHand()->get(i)->getLetter()<<"-"<<player->getPlayerHand()->get(i)->getValue();
     }
     std::cout<<"\n"<<std::endl;
 }

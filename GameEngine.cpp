@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include <fstream>
 
 //Constructor for New Game only
 GameEngine::GameEngine(Player* player1, Player* player2 ){
@@ -8,11 +9,13 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
     tileBag = new TileBag();
     newBoard = new Board();
     bool gameEnd = false;
+    bool game_Save = false;
 
     //Setting Tiles in Player's Hands (Only for New Game)
     for (int i = 0; i < 7; ++i){
         player1->getPlayerHand()->add_front(tileBag->getTile());
         player2->getPlayerHand()->add_front(tileBag->getTile());
+        // tileBag->size = tileBag->size - 2;
     }
 
     //In a New game, player 1 has the first chance
@@ -44,6 +47,7 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
             }
             else{
                 if(playerPrompt(player2, player1)){
+                    
                     gameEnd = true;
                 }
                 else{
@@ -53,8 +57,16 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
             }
         }
     }
-    gameEnds(player1, player2);
+    if (gameSave)
+    {
+        gameSaves();
+    }
+    else
+    {
+        gameEnds(player1, player2);
+    }
 }
+
 
 bool GameEngine::playerPrompt(Player* player1, Player* player2){
     std::cout<<"\n"<<player1->getPlayerName()<<", it's your turn"<<std::endl;
@@ -73,7 +85,6 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
         std::string input;
         std::cout<<"> ";
         getline(std::cin>>std::ws, input);
-
         //For place Done
         if (input == "place Done" && placingCounter == 0){
             std::cout<<"You have not placed anything"<<std::endl;
@@ -82,6 +93,52 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 
         else if(input == "place Done" && placingCounter > 0){
             placeDone = true;
+        }
+
+        else if(input.substr(0,4) == "save"){
+            std::string output = input.substr(5,input.size()-4);
+            if(checkFileExists(output)){
+                std::ofstream file(output);
+                file << player1->getPlayerName() << std::endl;
+                file << player1->getPlayerScore() << std::endl;
+
+                file << player1->getPlayerHand()->get(0)->getLetter()<<"-"<<player1->getPlayerHand()->get(0)->getValue();
+                for (int i = 1; i < player1->getPlayerHand()->size(); ++i){
+                    file << ", "<< player1->getPlayerHand()->get(i)->getLetter()<<"-"<<player1->getPlayerHand()->get(i)->getValue();
+                }
+                file << std::endl;
+
+                file << player2->getPlayerName() << std::endl;
+                file << player2->getPlayerScore() << std::endl;
+
+                file << player2->getPlayerHand()->get(0)->getLetter()<<"-"<<player2->getPlayerHand()->get(0)->getValue();
+                for (int i = 1; i < player2->getPlayerHand()->size(); ++i){
+                    file << ", "<< player2->getPlayerHand()->get(i)->getLetter()<<"-"<<player2->getPlayerHand()->get(i)->getValue();
+                }
+                file << std::endl;
+
+                
+                for (int i = 0; i < ENV_DIM; ++i){
+                    for (int j = 0; j < ENV_DIM; ++j){
+                        if (newBoard->board[i][j] != nullptr){
+                            char ch = static_cast<char>(i+65);
+                            file << newBoard->board[i][j]->getLetter() << "@" << ch << j << ", ";
+                        }
+                    }
+                }
+                file << "" << std::endl;
+
+                file << tileBag->get(0)->getLetter() << "-" << tileBag->get(0)->getValue();
+                for (int i = 1; i < tileBag->size; ++i){
+                    file << ", " << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue();
+                }
+                file << "" <<std::endl;
+                file << player1->getPlayerName() << std::endl;
+                
+                //Game Ends
+                gameSave = true;
+                return true;
+            }
         }
 
         //For pass
@@ -124,6 +181,8 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
         //For Placing
         //Checks if the input tile is in players hand or not
         else if (checkInputforPlacing(input, player1->getPlayerHand())){
+            // --tileBag->size;
+
             //If the Player places Tiles, then its Pass counter will become 0 again
             player1->setPassCounter(0);
             ++placingCounter;
@@ -151,18 +210,33 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 
             //Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
             player1->getPlayerHand()->add_back(tileBag->getTile());
+
+            //If all tiles placed, then BINGO!!!
+            if (placingCounter == 6){
+                std::cout<<"BINGO!!!\n"<<std::endl;
+                player1->setPlayerScore(player1->getPlayerScore() + 50);
+                placeDone = true;
+            }
         }
         
-        else if(!checksLetterinHand(input[6], player1->getPlayerHand())){
-            std::cout<<"Tile is not in Hand"<<std::endl;
-        }
-
         else{
             std::cout<<"Invalid Input"<<std::endl;
         }
     }
     return false;
 }
+
+
+bool GameEngine::checkFileExists(std::string output){
+    std::cout<<"File Name: "<<output<<std::endl;
+    std::ofstream file(output);
+
+    if (!file.fail()){
+        return true;
+    }
+    return false;
+}
+
 
 Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
     Tile* tileToPlace = new Tile('!', -1);
@@ -181,6 +255,11 @@ Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
         }
     }
     return tileToPlace;
+}
+
+
+void GameEngine::gameSaves(){
+    std::cout<<"Game Saved"<<std::endl;
 }
 
 
@@ -207,7 +286,7 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
 //Validates Input in 3 ways: Placed Tile should be in Hands, Command should be correctly formatted,
 //Coordinates given should legal
 bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
-    if(checkBoardCoordinates(input) && checksLetterinHand(input[6], hand) && checksString(input)){
+    if(checksString(input) && checksLetterinHand(input[6], hand) && checkBoardCoordinates(input)){
         return true;
     }
     return false;
@@ -234,7 +313,7 @@ bool GameEngine::checkRow(std::string input){
 
 //Checks if Column entered is Correct
 bool GameEngine::checkCol(char col){
-    for (char i = 'A'; i < 'O'; ++i){
+    for (char i = 'A'; i <= 'O'; ++i){
         if (col == i){
             return true;
         }
@@ -269,11 +348,12 @@ bool GameEngine::checksLetterinHand(char c, LinkedList* hand){
             return true;
         }
     }
+    std::cout<<"Tile is not in Hand"<<std::endl;
     return false;
 }
 
 
-//Convert character to integer value
+//Convert Char to Integer value
 int GameEngine::convertChartoInt(char c){
     int j=0;
     for (char i = 'A'; i <= c; i++){
@@ -282,4 +362,11 @@ int GameEngine::convertChartoInt(char c){
     return j;
 }
 
-
+//Convert Integer to Char
+char GameEngine::convertInttoChar(int i){
+    char c = 'A';
+    for (int j=0; j<=i; ++i){
+        ++c;
+    }
+    return c;
+}

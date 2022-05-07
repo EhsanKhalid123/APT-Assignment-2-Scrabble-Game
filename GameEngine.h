@@ -12,6 +12,7 @@ class GameEngine{
 
         //Handles the Ending of Game
         void gameEnds(Player* player1, Player* player2);
+        void gameSaves();
         bool checkInputforPlacing(std::string input, LinkedList* hand);
         bool checkRow(std::string input);
         bool checkCol(char col);
@@ -21,8 +22,11 @@ class GameEngine{
         int convertChartoInt(char c);
         bool playerPrompt(Player* player1, Player* player2);
         Tile* getTileFromHand(char tileLetter, Player* player);
+        bool checkFileExists(std::string input);
+        char convertInttoChar(int i);
 
     private:
         TileBag* tileBag;
         Board* newBoard;
+        bool gameSave = false;
 };

@@ -108,8 +108,10 @@ void LinkedList::remove_back(){
 
 //Return Tiles from front and deletes it
 Tile* LinkedList::withdraw_front(){
+   Tile* head1 = new Tile('!', -1);
    if (head != nullptr){
-      Tile* head1 = head->tile;
+      head1->setLetter(head->tile->getLetter());
+      head1->setValue(head->tile->getValue());
       remove_front();
       return head1;
    }

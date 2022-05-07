@@ -8,9 +8,15 @@ class TileBag {
         TileBag();
         void addTile(Tile* tile);
         Tile* getTile();
+        void shuffleLL(LinkedList* tmpBag);
+        void shuffleArray(Tile* arr[], int n);
+        Tile* get(int index);
+        // void display();
+
         
-    private:
         LinkedList* tileBag = new LinkedList();
+        int size;
+
 };
 
 #endif // ASSIGN2_TILEBAG_H
