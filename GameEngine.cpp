@@ -1,26 +1,69 @@
 #include "GameEngine.h"
 #include <fstream>
+#include <sstream>
+GameEngine::GameEngine(std::string savedData[]){
+    //Setting player1 Data
+    int score1 = std::stoi(savedData[1]);
+    LinkedList* hand1 = new LinkedList();
+    int letter_counter = -5;
+    int value_counter = -3;
 
-//Constructor for New Game only
-GameEngine::GameEngine(Player* player1, Player* player2 ){
-
-    //Created a New Board and a TileBag
-    //TileBag includes all the Tiles i.e. 98 Tiles
-    tileBag = new TileBag();
-    newBoard = new Board();
-    bool gameEnd = false;
-    bool game_Save = false;
-
-    //Setting Tiles in Player's Hands (Only for New Game)
+    //Reading players Hand and setting values
     for (int i = 0; i < 7; ++i){
-        player1->getPlayerHand()->add_front(tileBag->getTile());
-        player2->getPlayerHand()->add_front(tileBag->getTile());
-        // tileBag->size = tileBag->size - 2;
+        char ch = savedData[2].substr(letter_counter+5, 1).at(0);
+        letter_counter = letter_counter + 5;
+
+        int value = std::stoi(savedData[2].substr(value_counter+5, 1));
+        value_counter = value_counter + 5;
+
+        Tile* tile = new Tile(ch, value);
+        hand1->add_back(tile);
+    }
+    Player* player1 = new Player(savedData[0], 1, score1, hand1);
+
+    //Setting player2 Data
+    int score2 = std::stoi(savedData[4]);
+    LinkedList* hand2 = new LinkedList();
+    letter_counter = -5;
+    value_counter = -3;
+
+    //Reading players Hand and setting values
+    for (int i = 0; i < 7; ++i){
+        char ch = savedData[5].substr(letter_counter+5, 1).at(0);
+        letter_counter = letter_counter + 5;
+
+        int value = std::stoi(savedData[5].substr(value_counter+5, 1));
+        value_counter = value_counter + 5;
+
+        Tile* tile = new Tile(ch, value);
+        hand2->add_back(tile);
+    }
+    Player* player2 = new Player(savedData[3], 1, score2, hand2);
+
+    tileBag = new TileBag();
+    tileBag->clear();
+    std::string str;
+    std::istringstream iss(savedData[7]);
+    while (std::getline(iss, str, ',')){
+        Tile* tile2 = new Tile(str[0], str[2]);
+        tileBag->addTile(tile2);
     }
 
-    //In a New game, player 1 has the first chance
-    bool playerOneChance = true;
-    bool playerTwoChance = false;
+    newBoard = new Board();
+    std::istringstream iss2(savedData[6]);
+    while (std::getline(iss2, str, ',')){
+        Tile* tile3 = new Tile(str[0], 0);
+        if (str.size() == 5){
+            int row = ((int)str[3]-48)*10 + (int)str[4]-48;
+            newBoard->updateBoard(tile3, row, convertChartoInt(str[2]));
+        }
+        else{
+            newBoard->updateBoard(tile3, (int)str[3]-48, convertChartoInt(str[2]));
+        }
+    }
+
+    playerOneChance = true;
+    playerTwoChance = false;
 
     while (gameEnd == false){
 
@@ -47,7 +90,6 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
             }
             else{
                 if(playerPrompt(player2, player1)){
-                    
                     gameEnd = true;
                 }
                 else{
@@ -57,15 +99,66 @@ GameEngine::GameEngine(Player* player1, Player* player2 ){
             }
         }
     }
-    if (gameSave)
-    {
-        gameSaves();
-    }
-    else
-    {
-        gameEnds(player1, player2);
-    }
+    gameEnds(player1, player2);
 }
+
+
+//Constructor for New Game only
+GameEngine::GameEngine(Player* player1, Player* player2 ){
+
+    //Created a New Board and a TileBag
+    //TileBag includes all the Tiles i.e. 98 Tiles
+    tileBag = new TileBag();
+    newBoard = new Board();
+    gameEnd = false;
+
+    //Setting Tiles in Player's Hands (Only for New Game)
+    for (int i = 0; i < 7; ++i){
+        player1->getPlayerHand()->add_front(tileBag->getTile());
+        player2->getPlayerHand()->add_front(tileBag->getTile());
+    }
+
+    //In a New game, player 1 has the first chance
+    playerOneChance = true;
+    playerTwoChance = false;
+
+    while (gameEnd == false){
+
+        //If tileBag is empty then game ends
+        if (tileBag->getTile() == nullptr){
+            gameEnd = true;
+        }
+
+        //If player hands are empty then game ends
+        else if(player1->getPlayerHand()->size() == 0 || player2->getPlayerHand()->size() == 0){
+            gameEnd = true;
+        }
+        
+        else{
+            //Checking for Turns
+            if (playerOneChance == true){
+                if(playerPrompt(player1, player2)){
+                    gameEnd = true;
+                }
+                else{
+                    playerOneChance = false;
+                    playerTwoChance = true;
+                }
+            }
+            else{
+                if(playerPrompt(player2, player1)){
+                    gameEnd = true;
+                }
+                else{
+                    playerOneChance = true;
+                    playerTwoChance = false;
+                }
+            }
+        }
+    }
+    gameEnds(player1, player2);
+}
+
 
 
 bool GameEngine::playerPrompt(Player* player1, Player* player2){
@@ -122,7 +215,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                     for (int j = 0; j < ENV_DIM; ++j){
                         if (newBoard->board[i][j] != nullptr){
                             char ch = static_cast<char>(i+65);
-                            file << newBoard->board[i][j]->getLetter() << "@" << ch << j << ", ";
+                            file << newBoard->board[i][j]->getLetter() << "@" << ch << j << ",";
                         }
                     }
                 }
@@ -130,15 +223,23 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 
                 file << tileBag->get(0)->getLetter() << "-" << tileBag->get(0)->getValue();
                 for (int i = 1; i < tileBag->size; ++i){
-                    file << ", " << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue();
+                    file << "," << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue();
                 }
                 file << "" <<std::endl;
                 file << player1->getPlayerName() << std::endl;
                 
                 //Game Ends
-                gameSave = true;
-                return true;
+                std::cout<<"Game Saved\nGoodbye"<<std::endl;
+                exit(0);
             }
+        }
+
+        else if(input == "quit"){
+            // this->gameQuit = true;
+            // return true;
+            std::cout << "" << std::endl;
+            std::cout << "Goodbye" << std::endl;
+            exit(0);
         }
 
         //For pass
@@ -227,6 +328,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 }
 
 
+
 bool GameEngine::checkFileExists(std::string output){
     std::cout<<"File Name: "<<output<<std::endl;
     std::ofstream file(output);
@@ -236,6 +338,7 @@ bool GameEngine::checkFileExists(std::string output){
     }
     return false;
 }
+
 
 
 Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
@@ -258,11 +361,6 @@ Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
 }
 
 
-void GameEngine::gameSaves(){
-    std::cout<<"Game Saved"<<std::endl;
-}
-
-
 //Displays the Ending Messages
 void GameEngine::gameEnds(Player* player1, Player* player2){
     std::cout<<"\nGame Over"<<std::endl;
@@ -279,7 +377,8 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
         std::cout<<"Player "<<player2->getPlayerName()<< " won!"<<std::endl;
     }
 
-    std::cout<<"Goodbye 😄"<<std::endl;
+    std::cout<<"Goodbye"<<std::endl;
+    exit(0);
 }
 
 
@@ -361,6 +460,7 @@ int GameEngine::convertChartoInt(char c){
     }
     return j;
 }
+
 
 //Convert Integer to Char
 char GameEngine::convertInttoChar(int i){

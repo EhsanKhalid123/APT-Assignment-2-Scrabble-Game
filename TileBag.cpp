@@ -52,3 +52,8 @@ Tile* TileBag::get(int index){
     }
     return tileBag->get(index);
 }
+
+void TileBag::clear(){
+    tileBag->clear();
+    size = 0;
+}

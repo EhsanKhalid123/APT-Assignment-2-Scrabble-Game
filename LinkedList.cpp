@@ -153,9 +153,12 @@ void LinkedList::remove(int index){
 
 //Clears the LinkedList
 void LinkedList::clear(){
-   while (head != nullptr){
-      remove_front();
-   }
+   // while (head != nullptr){
+   //    remove_front();
+   // }
+   head->next = nullptr;
+   head->prev = nullptr;
+   head = nullptr;
 }
 
 //Displays LinkedList

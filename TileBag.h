@@ -11,6 +11,7 @@ class TileBag {
         void shuffleLL(LinkedList* tmpBag);
         void shuffleArray(Tile* arr[], int n);
         Tile* get(int index);
+        void clear();
         // void display();
 
         

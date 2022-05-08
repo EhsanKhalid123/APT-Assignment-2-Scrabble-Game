@@ -100,9 +100,34 @@ void Menu::loadGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Enter the filename from which to load a game" << std::endl;
     std::cout << "> "; std::cin >> fileName;
+    std::string str;
+    int counter = 0;
+    // int score;
 
-    std::cout << "" << std::endl;
-    std::cout << "Scrabble game successfully loaded" << std::endl;
+    LinkedList* loadData = new LinkedList();
+    std::string data[9];
+    std::ifstream loadFile(fileName);
+
+    if (!loadFile.fail()){
+        while (!loadFile.eof()){
+            std::getline(loadFile, str);
+            //player 1 Name
+            if (counter<10){
+                data[counter] = str;
+            }
+            ++counter;
+        }
+        std::cout << "" << std::endl;
+        std::cout << "Scrabble game successfully loaded" << std::endl;
+        GameEngine* savedGameEngine = new GameEngine(data);
+    }
+    else{
+        std::cout<<"Cannot Open File"<<std::endl;
+    }
+
+    
+
+
 }
 
 void Menu::creditsMenu(){
