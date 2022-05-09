@@ -234,7 +234,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             }
         }
 
-        else if(input == "quit"){
+        else if(input == "quit" || input == "^D" || input == "^C"){
             // this->gameQuit = true;
             // return true;
             std::cout << "" << std::endl;
