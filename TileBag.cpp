@@ -1,22 +1,44 @@
 #include "TileBag.h"
 #include "LinkedList.h"
 #include <fstream>
-#include<iostream>
+#include <iostream>
+#include <random>
 
 TileBag::TileBag(){
     std::ifstream tilesFile("ScrabbleTiles.txt");
     Letter letter;
     Value value;
 
+    // Get Letter and Value from the file and Convert it into a Tile
     if (!tilesFile.fail()){
         while (tilesFile >> letter >> value)
         {
             //Creating a new Tile
             Tile* tile = new Tile(letter, value);
-
-            //Adding the Tile to Bag
-            tileBag->add_back(tile);
+            //Adding the Tile to Temporary Bag
+            tempTileBag->add_back(tile);
             ++size;
+        }
+    }
+
+    std::random_device randomSeed;
+    std::uniform_int_distribution<int> uniform_dist(0, tempTileBag->size());
+    int i = 0;
+    while (i < tempTileBag->size()) {     
+
+        // Picks a random tile from the temporary Tile bag!!!!
+        int randTileIndex = uniform_dist(randomSeed);
+        if (tempTileBag->get(randTileIndex) != nullptr) {
+            
+            // Creates a new Tile based on the random picked tile from tempTileBag
+            Tile* tile = new Tile(*tempTileBag->get(randTileIndex));
+
+            // Adds the tile to the actual tileBag
+            tileBag->add_back(tile);
+
+            // Removes the tiles from temporary tile bag
+            tempTileBag->remove(randTileIndex);
+            ++i;
         }
     }
 }

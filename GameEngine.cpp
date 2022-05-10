@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include <fstream>
 #include <sstream>
+
 GameEngine::GameEngine(std::string savedData[]){
     //Setting player1 Data
     int score1 = std::stoi(savedData[1]);
@@ -19,6 +20,7 @@ GameEngine::GameEngine(std::string savedData[]){
         Tile* tile = new Tile(ch, value);
         hand1->add_back(tile);
     }
+    
     Player* player1 = new Player(savedData[0], 1, score1, hand1);
 
     //Setting player2 Data

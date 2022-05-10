@@ -15,6 +15,7 @@ class TileBag {
         // void display();
 
         
+        LinkedList* tempTileBag = new LinkedList();
         LinkedList* tileBag = new LinkedList();
         int size;
 
