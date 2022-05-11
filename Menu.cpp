@@ -48,12 +48,11 @@ void Menu::mainMenu(){
 
 void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
 
-    if (playerName == "quit" || playerName == "^D" || playerName == "^C"){
-        exit(0);
-    }
-
     for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
         while(islower(*pName)){
+        if (playerName == "quit" || playerName == "^D" || playerName == "^C"){
+            exit(0);
+        }
             std::cout << "" << std::endl;
             std::cout << "Please Enter Only Uppercase Characters!" << std::endl;
             std::cout << "" << std::endl;
