@@ -315,7 +315,8 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             player1->getPlayerHand()->add_back(tileBag->getTile());
 
             //If all tiles placed, then BINGO!!!
-            if (placingCounter == 6){
+            if (placingCounter == 7){
+                std::cout<<""<<std::endl;
                 std::cout<<"BINGO!!!\n"<<std::endl;
                 player1->setPlayerScore(player1->getPlayerScore() + 50);
                 placeDone = true;
