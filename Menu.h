@@ -8,8 +8,6 @@ class Menu {
 public:
 
     Menu();
-    Menu(Menu& other);
-    ~Menu();
 
     void mainMenu();
 

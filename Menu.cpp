@@ -6,17 +6,8 @@
 #include <algorithm>
 #include <cctype>
 
-Menu::Menu(){
-
-}
+Menu::Menu(){}
     
-Menu::Menu(Menu& other){
-
-}
-
-Menu::~Menu(){
-
-}
     
 void Menu::mainMenu(){
     std::cout << "" << std::endl;
@@ -30,8 +21,9 @@ void Menu::mainMenu(){
 
     std::cout << "> "; std::cin >> userMenuInput;
     if (userMenuInput == 1){
-        newGameMenu();
-        
+        if (!std::cin.eof()){
+            newGameMenu(); 
+        }
     } else if (userMenuInput == 2){
         loadGameMenu();
     } else if (userMenuInput == 3){
@@ -39,25 +31,22 @@ void Menu::mainMenu(){
     }else if (userMenuInput == 4){
         std::cout << "" << std::endl;
         std::cout << "Goodbye" << std::endl;
-        exit(0);
     }
 
 }
 
 void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
-
-    for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
-        while(islower(*pName)){
-        if (playerName == "quit" || playerName == "^D" || playerName == "^C"){
-            exit(0);
+        for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
+            while(islower(*pName)){
+                if (!std::cin.eof()){
+                    std::cout << "" << std::endl;
+                    std::cout << "Please Enter Only Uppercase Characters!" << std::endl;
+                    std::cout << "" << std::endl;
+                    std::cout << "Enter a name for "<< playerNumber << " (uppercase characters only)" << std::endl;
+                    std::cout << "> "; std::cin >> playerName;        
+                }     
+            }
         }
-            std::cout << "" << std::endl;
-            std::cout << "Please Enter Only Uppercase Characters!" << std::endl;
-            std::cout << "" << std::endl;
-            std::cout << "Enter a name for "<< playerNumber << " (uppercase characters only)" << std::endl;
-            std::cout << "> "; std::cin >> playerName;
-        }
-    }
 }
 
 void Menu::newGameMenu(){
@@ -67,7 +56,7 @@ void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     //Player Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
-    std::cout << "> "; std::cin >> playerName;
+    std::cout << "> "; std::cin >> playerName;  
     checkForLower(playerName, "Player 1");
 
     //Initialising a hand for a player
@@ -78,7 +67,7 @@ void Menu::newGameMenu(){
 
     //Player Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
-    std::cout << "> "; std::cin >> playerName2;
+    std::cout << "> "; std::cin >> playerName2;  
     checkForLower(playerName2, "Player 2");
 
     //Initialising a hand for a player
@@ -96,7 +85,7 @@ void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << player1->getPlayerName() << std::endl;
     std::cout << player2->getPlayerName() << std::endl;
-    
+   
 }
 
 void Menu::loadGameMenu(){
