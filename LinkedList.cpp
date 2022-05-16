@@ -4,17 +4,8 @@
 LinkedList::LinkedList() {
    this->head = nullptr;
    this->tail = nullptr;
-   // TODO
+
 }
-
-// LinkedList::LinkedList(LinkedList& other) {
-//    head = nullptr;
-
-//     for(int i = 0; i < other.size(); ++i){
-//         Tile* tile = new Tile(*other.get(i));
-//         add_back(tile);
-//     }
-// }
 
 LinkedList::~LinkedList(){
    clear();

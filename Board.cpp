@@ -1,15 +1,19 @@
 #include <iostream>
 #include "Board.h"
-// #include "Tile.h"
+
+char columns[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
+
 
 Board::Board(){
+
+    // this->size = 0;
     for (int i = 0; i < ENV_DIM; ++i){
         // Tile* tile1 = new Tile('A',1);
         std::vector<Tile*> row;
         for (int j = 0; j < ENV_DIM; ++j){
             row.push_back(nullptr);
         }
-        board.push_back(row);
+        this->board.push_back(row);
     }
 }
 
@@ -22,7 +26,7 @@ Board::~Board(){
 }
 
 void Board::updateBoard(Tile* tile, int row, int col){
-    board[col-1][row] = tile;
+    this->board[col-1][row] = tile;
 }
 
 void Board::printBoard(){
@@ -31,14 +35,14 @@ void Board::printBoard(){
     std::cout<<"   ------------------------------------------------------------"<<std::endl;
 
     //Printing Columns and Blank Spaces no Tile is Present there
-    for (int i = 0; i < board.size(); ++i){
-        std::cout<<cols[i];
-        for (int j = 0; j < board[i].size(); ++j){
-            if (board[i][j] == nullptr){
+    for (int i = 0; i < (int)this->board.size(); ++i){
+        std::cout << columns[i];
+        for (int j = 0; j < (int)this->board[i].size(); ++j){
+            if (this->board[i][j] == nullptr){
                 std::cout<<" |  ";
             }
             else{
-                std::cout<<" | "<<board[i][j]->getLetter();
+                std::cout<<" | "<< (char)this->board[i][j]->getLetter();
             }
         }
         std::cout<<" |"<<std::endl;

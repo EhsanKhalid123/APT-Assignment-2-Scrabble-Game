@@ -1,5 +1,5 @@
-#include "Menu.cpp"
-#include "TileBag.cpp"
+#include "Menu.h"
+#include "TileBag.h"
 
 //Testing purpose
 // #include "GameEngine.h"
@@ -17,6 +17,7 @@ int main(void) {
 
    Menu* mainMenu = new Menu();
    mainMenu->mainMenu();
+   
 
    // GameEngine* game = new GameEngine();
    // std::string input = "place Done";

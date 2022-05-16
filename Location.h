@@ -1,6 +1,7 @@
 #ifndef ASSIGN2_LOCATION_H
 #define ASSIGN2_LOCATION_H
 #include <iostream>
+#include "Board.h"
 
 class Location{
     public:

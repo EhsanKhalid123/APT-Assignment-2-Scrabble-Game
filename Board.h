@@ -1,6 +1,9 @@
-// #ifndef ASSIGN2_BOARD_H
+#ifndef ASSIGN2_BOARD_H
+#define ASSIGN2_BOARD_H
+
 #include <vector>
 #include "Types.h"
+
 
 class Board {
 
@@ -17,6 +20,7 @@ public:
 
     // Env env;
     std::vector<std::vector<Tile*> > board;
+
 };
 
-// #endif // ASSIGN2_BOARD_H
+#endif // ASSIGN2_BOARD_H

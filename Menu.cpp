@@ -1,9 +1,7 @@
-#include "Player.cpp"
 #include "Menu.h"
 #include <iostream>
 #include <istream>
 #include <fstream>
-#include "GameEngine.cpp"
 
 #include <algorithm>
 #include <cctype>
@@ -91,6 +89,8 @@ void Menu::newGameMenu(){
     std::cout << "Let's Play!" << std::endl;
 
     GameEngine* gameEngine = new GameEngine(player1, player2);
+    gameEngine->gameStarts();
+
 
     // These will be used later to display the names of the person who has the turn
     std::cout << "" << std::endl;
@@ -105,9 +105,8 @@ void Menu::loadGameMenu(){
     std::cout << "> "; std::cin >> fileName;
     std::string str;
     int counter = 0;
-    // int score;
 
-    LinkedList* loadData = new LinkedList();
+    // LinkedList* loadData = new LinkedList();
     std::string data[9];
     std::ifstream loadFile(fileName);
 
@@ -122,7 +121,9 @@ void Menu::loadGameMenu(){
         }
         std::cout << "" << std::endl;
         std::cout << "Scrabble game successfully loaded" << std::endl;
-        GameEngine* savedGameEngine = new GameEngine(data);
+        GameEngine* savedGameEngine = new GameEngine();
+        savedGameEngine->loadGame(data);
+        
     }
     else{
         std::cout<<"Cannot Open File"<<std::endl;

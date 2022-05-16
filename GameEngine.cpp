@@ -2,8 +2,22 @@
 #include <fstream>
 #include <sstream>
 
-GameEngine::GameEngine(std::string savedData[]){
-    //Setting player1 Data
+GameEngine::GameEngine(){
+
+}
+
+GameEngine::~GameEngine() {
+
+}
+
+//Constructor for New Game only
+GameEngine::GameEngine(Player* player1, Player* player2 ){
+    this-> player1 = player1;
+    this-> player2 = player2;    
+}
+
+void GameEngine::loadGame(std::string savedData[]){
+        //Setting player1 Data
     int score1 = std::stoi(savedData[1]);
     LinkedList* hand1 = new LinkedList();
     int letter_counter = -5;
@@ -104,11 +118,8 @@ GameEngine::GameEngine(std::string savedData[]){
     gameEnds(player1, player2);
 }
 
-
-//Constructor for New Game only
-GameEngine::GameEngine(Player* player1, Player* player2 ){
-
-    //Created a New Board and a TileBag
+void GameEngine::gameStarts(){
+        //Created a New Board and a TileBag
     //TileBag includes all the Tiles i.e. 98 Tiles
     tileBag = new TileBag();
     newBoard = new Board();
@@ -223,10 +234,11 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 }
                 file << "" << std::endl;
 
-                file << tileBag->get(0)->getLetter() << "-" << tileBag->get(0)->getValue();
+                file << tileBag->get(0)->getLetter() << "-" << tileBag->get(0)->getValue() << std::flush;
                 for (int i = 1; i < tileBag->size; ++i){
-                    file << "," << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue();
+                    file << "," << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue() << std::flush;
                 }
+                file.flush();
                 file << "" <<std::endl;
                 file << player1->getPlayerName() << std::endl;
                 
@@ -236,7 +248,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             }
         }
 
-        else if(input == "quit" || input == "^D" || input == "^C"){
+        else if(input == "quit" || std::cin.eof()){
             // this->gameQuit = true;
             // return true;
             std::cout << "" << std::endl;

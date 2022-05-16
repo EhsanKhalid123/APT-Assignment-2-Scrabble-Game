@@ -1,9 +1,9 @@
 #ifndef ASSIGN2_Player_H
 #define ASSIGN2_Player_H
+
 #include <string>
 #include "LinkedList.h"
 #include "Location.h"
-// #include "Board.h"
 
 class Player {
 public:

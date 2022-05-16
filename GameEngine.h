@@ -1,17 +1,20 @@
+#ifndef ASSIGN2_GAMEENGINE_H
+#define ASSIGN2_GAMEENGINE_H
+
 #include <iostream>
 #include "Player.h"
 #include "LinkedList.h"
-#include "Board.cpp"
+#include "Board.h"
 #include "TileBag.h"
 #include "Location.h"
 
 class GameEngine{
     public:
         GameEngine();
-        //Constructor for Saved Game
-        GameEngine(std::string savedData[]);
+        ~GameEngine();
         GameEngine(Player* player1, Player* player2);
-
+        void gameStarts();
+        void loadGame(std::string* savedData);
         //Handles the Ending of Game
         void gameEnds(Player* player1, Player* player2);
         bool checkInputforPlacing(std::string input, LinkedList* hand);
@@ -33,4 +36,8 @@ class GameEngine{
         bool gameEnd = false;
         bool playerOneChance;
         bool playerTwoChance;
+        Player* player1;
+        Player* player2;
 };
+
+#endif // ASSIGN2_GAMEENGINE_H
