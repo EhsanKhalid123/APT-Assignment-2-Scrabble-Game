@@ -2,13 +2,13 @@
 #include <iostream>
 #include <istream>
 #include <fstream>
-
 #include <algorithm>
 #include <cctype>
 
+/* Menu Class Constructor */
 Menu::Menu(){}
     
-    
+/* Displays Main Menu & Other Menus Based on User Input */
 void Menu::mainMenu(){
     std::cout << "" << std::endl;
     std::cout << "Menu" << std::endl;
@@ -19,11 +19,10 @@ void Menu::mainMenu(){
     std::cout << "4. Quit" << std::endl;
     std::cout << "" << std::endl;
 
+/* Displays menu based on user input */
     std::cout << "> "; std::cin >> userMenuInput;
     if (userMenuInput == 1){
-        if (!std::cin.eof()){
-            newGameMenu(); 
-        }
+        newGameMenu(); 
     } else if (userMenuInput == 2){
         loadGameMenu();
     } else if (userMenuInput == 3){
@@ -35,8 +34,10 @@ void Menu::mainMenu(){
 
 }
 
+/* Method to check for Lowercase user name input */
 void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
         for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
+            // Loop if name is lowercase
             while(islower(*pName)){
                 if (!std::cin.eof()){
                     std::cout << "" << std::endl;
@@ -49,45 +50,41 @@ void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
         }
 }
 
+/* New Game Menu */
 void Menu::newGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
     
     std::cout << "" << std::endl;
-    //Player Name Prompt
+    // Player 1 Name Prompt
     std::cout << "Enter a name for Player 1 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName;  
     checkForLower(playerName, "Player 1");
 
-    //Initialising a hand for a player
+    // Initialising a hand for a player
     LinkedList* hand1 = new LinkedList();
     Player* player1 = new Player(playerName, 1, 0, hand1);
-
     std::cout << "" << std::endl;
 
-    //Player Name Prompt
+    // Player 2 Name Prompt
     std::cout << "Enter a name for Player 2 (uppercase characters only)" << std::endl;
     std::cout << "> "; std::cin >> playerName2;  
     checkForLower(playerName2, "Player 2");
 
-    //Initialising a hand for a player
+    // Initialising a hand for a player
     LinkedList* hand2 = new LinkedList();
     Player* player2 = new Player(playerName2, 2, 0, hand2);
 
     std::cout << "" << std::endl;
     std::cout << "Let's Play!" << std::endl;
 
+    // Calls the Start Game Method to begin game
     GameEngine* gameEngine = new GameEngine(player1, player2);
     gameEngine->gameStarts();
-
-
-    // These will be used later to display the names of the person who has the turn
-    std::cout << "" << std::endl;
-    std::cout << player1->getPlayerName() << std::endl;
-    std::cout << player2->getPlayerName() << std::endl;
-   
+ 
 }
 
+/* Load Game Menu */
 void Menu::loadGameMenu(){
     std::cout << "" << std::endl;
     std::cout << "Enter the filename from which to load a game" << std::endl;
@@ -95,14 +92,15 @@ void Menu::loadGameMenu(){
     std::string str;
     int counter = 0;
 
-    // LinkedList* loadData = new LinkedList();
+    // Loads file
     std::string data[9];
     std::ifstream loadFile(fileName);
 
+    // Get data from file if file exists
     if (!loadFile.fail()){
         while (!loadFile.eof()){
             std::getline(loadFile, str);
-            //player 1 Name
+            // Stores the data from file into an array
             if (counter<9){
                 data[counter] = str;
             }
@@ -110,19 +108,17 @@ void Menu::loadGameMenu(){
         }
         std::cout << "" << std::endl;
         std::cout << "Scrabble game successfully loaded" << std::endl;
+
+        // Calls load Game method to continue playing loaded game
         GameEngine* savedGameEngine = new GameEngine();
-        savedGameEngine->loadGame(data);
-        
+        savedGameEngine->loadGame(data);     
     }
-    else{
+    else {
         std::cout<<"Cannot Open File"<<std::endl;
     }
-
-    
-
-
 }
 
+/* Displays the Credits */
 void Menu::creditsMenu(){
 
     std::cout << "" << std::endl;
@@ -147,5 +143,6 @@ void Menu::creditsMenu(){
     std::cout << "Email: s3863813@student.rmit.edu.au" << std::endl;
     std::cout << "----------------------------------" << std::endl;
 
+    // Displays Main Menu
     mainMenu();
 }

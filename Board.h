@@ -18,7 +18,6 @@ public:
 
     void printBoard();
 
-    // Env env;
     std::vector<std::vector<Tile*> > board;
 
 };

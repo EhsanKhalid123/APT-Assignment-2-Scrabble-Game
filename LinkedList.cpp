@@ -1,22 +1,23 @@
 #include "LinkedList.h"
 
-//Constructor
+/* Constructor */
 LinkedList::LinkedList() {
    this->head = nullptr;
    this->tail = nullptr;
 
 }
 
+/* De-constructor for LinkedList */
 LinkedList::~LinkedList(){
    clear();
 }
 
-//Returns size of LinkedList
+/* Returns size of LinkedList */
 int LinkedList::size(){
    return length;
 }
 
-//Gets Tile from a particular index
+/* Gets Tile from a particular index */
 Tile* LinkedList::get(int index){
    Tile* returnTile = nullptr;
     if(index >= 0 && index < size()){
@@ -31,10 +32,10 @@ Tile* LinkedList::get(int index){
     return returnTile;
 }
 
-//Adds Tile at front
+/* Adds Tile at front */
 void LinkedList::add_front(Tile* tile){
    Node* node;
-   //if list is empty
+   // if list is empty
    if (head == nullptr){
       node = new Node(tile, nullptr, nullptr);
       head = node;
@@ -49,7 +50,7 @@ void LinkedList::add_front(Tile* tile){
    }
 }
 
-//Adds Tile at the back
+/* Adds Tile at the back */
 void LinkedList::add_back(Tile* tile){
    Node* node;
    if (head == nullptr){
@@ -70,7 +71,7 @@ void LinkedList::add_back(Tile* tile){
    ++length;
 }
 
-//Deletes Tiles from front
+/* Deletes Tiles from front */
 void LinkedList::remove_front(){
    Node* tmp = head;
    if (head != nullptr){
@@ -84,7 +85,7 @@ void LinkedList::remove_front(){
    }
 }
 
-//Deletes Tiles from Back
+/* Deletes Tiles from Back */
 void LinkedList::remove_back(){
    if (head != nullptr){
       Node* node = tail->prev;
@@ -97,7 +98,7 @@ void LinkedList::remove_back(){
    }
 }
 
-//Return Tiles from front and deletes it
+/* Return Tiles from front and deletes it */
 Tile* LinkedList::withdraw_front(){
    Tile* head1 = new Tile('!', -1);
    if (head != nullptr){
@@ -112,7 +113,7 @@ Tile* LinkedList::withdraw_front(){
    }
 }
 
-//Removes the Tile from a particular index
+/* Removes the Tile from a particular index */
 void LinkedList::remove(int index){
    if (index >= 0 && index < size()) {
       if (head != nullptr) {
@@ -142,17 +143,14 @@ void LinkedList::remove(int index){
    }
 }
 
-//Clears the LinkedList
+/* Clears the LinkedList */
 void LinkedList::clear(){
-   // while (head != nullptr){
-   //    remove_front();
-   // }
    head->next = nullptr;
    head->prev = nullptr;
    head = nullptr;
 }
 
-//Displays LinkedList
+/* Displays LinkedList */
 void LinkedList::display(){
    Node* start = head;
    while (start != nullptr){

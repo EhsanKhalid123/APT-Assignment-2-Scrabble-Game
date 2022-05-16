@@ -5,7 +5,6 @@
 #include <vector> 
 
 #define ENV_DIM     15
-
         
 typedef std::vector<std::vector< Tile* > > Env;
 

@@ -5,19 +5,24 @@
 
 class TileBag {
     public:
-        TileBag();
-        void addTile(Tile* tile);
-        Tile* getTile();
-        void shuffleLL(LinkedList* tmpBag);
-        void shuffleArray(Tile* arr[], int n);
-        Tile* get(int index);
-        void clear();
-        void shuffle(Tile* tileBagarr, int length);
-        // void display();
 
+        TileBag();
         
+        void addTile(Tile* tile);
+        
+        Tile* getTile();
+               
+        void shuffleArray(Tile* arr[], int n);
+        
+        Tile* get(int index);
+        
+        void clear();
+
+        void shuffle(Tile* tileBagarr, int length);
+    
         LinkedList* tempTileBag = new LinkedList();
         LinkedList* tileBag = new LinkedList();
+        
         int size;
 
 };

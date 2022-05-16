@@ -10,24 +10,42 @@
 
 class GameEngine{
     public:
+    
         GameEngine();
+        
         ~GameEngine();
+        
         GameEngine(Player* player1, Player* player2);
+        
         void gameStarts();
+        
         void loadGame(std::string* savedData);
+        
         //Handles the Ending of Game
         void gameEnds(Player* player1, Player* player2);
+
         bool checkInputforPlacing(std::string input, LinkedList* hand);
+        
         bool checkRow(std::string input);
+        
         bool checkCol(char col);
+        
         bool checksString(std::string input);
+        
         bool checksLetterinHand(char c, LinkedList* hand);
+        
         bool checkBoardCoordinates(std::string input);
+        
         int convertChartoInt(char c);
+        
         bool playerPrompt(Player* player1, Player* player2);
+       
         Tile* getTileFromHand(char tileLetter, Player* player);
+        
         bool checkFileExists(std::string input);
+        
         char convertInttoChar(int i);
+        
         void gameQuits();
 
     private:

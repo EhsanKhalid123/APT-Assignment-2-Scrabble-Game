@@ -2,28 +2,27 @@
 #include <fstream>
 #include <sstream>
 
-GameEngine::GameEngine(){
+/* Default Constructor */
+GameEngine::GameEngine(){}
 
-}
+/* De-constructor */
+GameEngine::~GameEngine() {}
 
-GameEngine::~GameEngine() {
-
-}
-
-//Constructor for New Game only
+/* Constructor for New Game */
 GameEngine::GameEngine(Player* player1, Player* player2 ){
     this-> player1 = player1;
     this-> player2 = player2;    
 }
 
+/* Loads the saved games */
 void GameEngine::loadGame(std::string savedData[]){
-        //Setting player1 Data
+    // Setting player 1 Data
     int score1 = std::stoi(savedData[1]);
     LinkedList* hand1 = new LinkedList();
     int letter_counter = -5;
     int value_counter = -3;
 
-    //Reading players Hand and setting values
+    // Reading players Hand and setting values
     for (int i = 0; i < 7; ++i){
         char ch = savedData[2].substr(letter_counter+5, 1).at(0);
         letter_counter = letter_counter + 5;
@@ -37,13 +36,13 @@ void GameEngine::loadGame(std::string savedData[]){
     
     Player* player1 = new Player(savedData[0], 1, score1, hand1);
 
-    //Setting player2 Data
+    // Setting player 2 Data
     int score2 = std::stoi(savedData[4]);
     LinkedList* hand2 = new LinkedList();
     letter_counter = -5;
     value_counter = -3;
 
-    //Reading players Hand and setting values
+    // Reading players Hand and setting values
     for (int i = 0; i < 7; ++i){
         char ch = savedData[5].substr(letter_counter+5, 1).at(0);
         letter_counter = letter_counter + 5;
@@ -83,18 +82,18 @@ void GameEngine::loadGame(std::string savedData[]){
 
     while (gameEnd == false){
 
-        //If tileBag is empty then game ends
+        // If tileBag is empty then game ends
         if (tileBag->getTile() == nullptr){
             gameEnd = true;
         }
 
-        //If player hands are empty then game ends
+        // If player hands are empty then game ends
         else if(player1->getPlayerHand()->size() == 0 || player2->getPlayerHand()->size() == 0){
             gameEnd = true;
         }
         
         else{
-            //Checking for Turns
+            // Checking for Turns
             if (playerOneChance == true){
                 if(playerPrompt(player1, player2)){
                     gameEnd = true;
@@ -118,37 +117,38 @@ void GameEngine::loadGame(std::string savedData[]){
     gameEnds(player1, player2);
 }
 
+/* Starts the Game */
 void GameEngine::gameStarts(){
-        //Created a New Board and a TileBag
-    //TileBag includes all the Tiles i.e. 98 Tiles
+    // Created a New Board and a TileBag
+    // TileBag includes all the Tiles i.e. 98 Tiles
     tileBag = new TileBag();
     newBoard = new Board();
     gameEnd = false;
 
-    //Setting Tiles in Player's Hands (Only for New Game)
+    // Setting Tiles in Player's Hands (Only for New Game)
     for (int i = 0; i < 7; ++i){
         player1->getPlayerHand()->add_front(tileBag->getTile());
         player2->getPlayerHand()->add_front(tileBag->getTile());
     }
 
-    //In a New game, player 1 has the first chance
+    // In a New game, player 1 has the first chance
     playerOneChance = true;
     playerTwoChance = false;
 
     while (gameEnd == false){
 
-        //If tileBag is empty then game ends
+        // If tileBag is empty then game ends
         if (tileBag->getTile() == nullptr){
             gameEnd = true;
         }
 
-        //If player hands are empty then game ends
+        // If player hands are empty then game ends
         else if(player1->getPlayerHand()->size() == 0 || player2->getPlayerHand()->size() == 0){
             gameEnd = true;
         }
         
         else{
-            //Checking for Turns
+            // Checking for Turns
             if (playerOneChance == true){
                 if(playerPrompt(player1, player2)){
                     gameEnd = true;
@@ -173,25 +173,25 @@ void GameEngine::gameStarts(){
 }
 
 
-
+/* Commands for Players: Place Tile, Save, Pass, Replace & Quit */
 bool GameEngine::playerPrompt(Player* player1, Player* player2){
     std::cout<<"\n"<<player1->getPlayerName()<<", it's your turn"<<std::endl;
     std::cout<<"Score for "<<player1->getPlayerName()<<": "<<player1->getPlayerScore()<<std::endl;
     std::cout<<"Score for "<<player2->getPlayerName()<<": "<<player2->getPlayerScore()<<std::endl;
     newBoard->printBoard();
 
-    //Displaying Tiles on player's Hand
+    // Displaying Tiles on player's Hand
     std::cout<<"Your hand is"<<std::endl;
     player1->TilesonPlayersHands(player1);
 
     int placingCounter = 0;
-    //User placing tiles with command (loop)
+    // User placing tiles with command (loop)
     bool placeDone = false;
     while (placeDone == false){
         std::string input;
         std::cout<<"> ";
         getline(std::cin>>std::ws, input);
-        //For place Done
+        // For place Done
         if (input == "place Done" && placingCounter == 0){
             std::cout<<"You have not placed anything"<<std::endl;
             placeDone = false;
@@ -242,23 +242,21 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 file << "" << std::endl;
                 file << player1->getPlayerName() << std::endl;
                 
-                //Game Ends
+                // Game Ends
                 std::cout<<"Game Saved\nGoodbye"<<std::endl;
                 exit(0);
             }
         }
 
         else if(input == "quit" || std::cin.eof()){
-            // this->gameQuit = true;
-            // return true;
             std::cout << "" << std::endl;
             std::cout << "Goodbye" << std::endl;
             exit(0);
         }
 
-        //For pass
-        //If both users have passed then game ends
-        //It is 3 because the player who passed first will be asked one more time
+        // For pass
+        // If both users have passed then game ends
+        // It is 3 because the player who passed first will be asked one more time
         else if(input == "pass"){
             if (placingCounter > 0){
                 player1->setPassCounter(0);
@@ -276,35 +274,34 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             }
         }
 
-        //For Replacing
+        // For Replacing
         else if ((input.substr(0, 7) == "replace") && checksLetterinHand(input[8], player1->getPlayerHand())){
             
-            //If Player replaces tile then also its previous Pass counter will become useless
+            // If Player replaces tile then also its previous Pass counter will become useless
             player1->setPassCounter(0);
 
-            //Tile to Remove
+            // Tile to Remove
             Tile* tileToRemove = getTileFromHand(input[8], player1);
 
-            //setting tiles on hand again
+            // setting tiles on hand again
             player1->getPlayerHand()->add_back(tileBag->getTile());
 
-            //adds the tile from players hand to the tile bag
+            // adds the tile from players hand to the tile bag
             tileBag->addTile(tileToRemove);
             placeDone = true;
         }
 
-        //For Placing
-        //Checks if the input tile is in players hand or not
+        // For Placing
+        // Checks if the input tile is in players hand or not
         else if (checkInputforPlacing(input, player1->getPlayerHand())){
-            // --tileBag->size;
 
-            //If the Player places Tiles, then its Pass counter will become 0 again
+            // If the Player places Tiles, then its Pass counter will become 0 again
             player1->setPassCounter(0);
             ++placingCounter;
 
             Tile* tileToPlace = getTileFromHand(input[6], player1);
 
-            //Setting rows, cols for positioning the Tile
+            // Setting rows, cols for positioning the Tile
             int col = convertChartoInt(input[11]);
             int row;
             if (input.size() == 14){
@@ -314,19 +311,19 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 row = (int)input[12] - 48;
             }
             
-            //Placing Tile on Board
+            // Placing Tile on Board
             newBoard->updateBoard(tileToPlace, row, col);
 
-            //Getting Tile Value
+            // Getting Tile Value
             int tileScore = tileToPlace->getValue();
 
-            //Player's Score update
+            // Player's Score update
             player1->setPlayerScore(player1->getPlayerScore() + tileScore);
 
-            //Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
+            // Draw a Replacement Tile from Tile bag and add it to the Player's hand, if there are available tiles
             player1->getPlayerHand()->add_back(tileBag->getTile());
 
-            //If all tiles placed, then BINGO!!!
+            // If all tiles placed, then BINGO!!!
             if (placingCounter == 7){
                 std::cout<<""<<std::endl;
                 std::cout<<"BINGO!!!\n"<<std::endl;
@@ -334,7 +331,6 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 placeDone = true;
             }
         }
-        
         else{
             std::cout<<"Invalid Input"<<std::endl;
         }
@@ -343,7 +339,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 }
 
 
-
+/* Checks if user input file exists to load */
 bool GameEngine::checkFileExists(std::string output){
     std::cout<<"File Name: "<<output<<std::endl;
     std::ofstream file(output);
@@ -355,19 +351,19 @@ bool GameEngine::checkFileExists(std::string output){
 }
 
 
-
+/* Gets tiles from Players Hand */ 
 Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
     Tile* tileToPlace = new Tile('!', -1);
 
-    //Getting Tile for that particular letter
+    // Getting Tile for that particular letter
     for (int i = 0; i < 7; ++i){
         if (tileLetter == player1->getPlayerHand()->get(i)->getLetter()){
 
-            //Sets the tile from hand to tileToPlace
+            // Sets the tile from hand to tileToPlace
             tileToPlace->setLetter(player1->getPlayerHand()->get(i)->getLetter());
             tileToPlace->setValue(player1->getPlayerHand()->get(i)->getValue());
             
-            //And deletes the tile too
+            // And deletes the tile too
             player1->getPlayerHand()->remove(i);
             return tileToPlace;
         }
@@ -376,7 +372,7 @@ Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
 }
 
 
-//Displays the Ending Messages
+/* Displays the Ending Messages */
 void GameEngine::gameEnds(Player* player1, Player* player2){
     std::cout<<"\nGame Over"<<std::endl;
     std::cout<<"Score for "<<player1->getPlayerName()<<": "<<player1->getPlayerScore()<<std::endl;
@@ -397,8 +393,9 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
 }
 
 
-//Validates Input in 3 ways: Placed Tile should be in Hands, Command should be correctly formatted,
-//Coordinates given should legal
+/* Validates Input in 3 ways: Placed Tile should be in Hands, Command should be correctly formatted,
+Coordinates given should legal,
+Checks for correct user input coordinated given */
 bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
     if(checksString(input) && checksLetterinHand(input[6], hand) && checkBoardCoordinates(input)){
         return true;
@@ -407,7 +404,7 @@ bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
 }
 
 
-//Checks if Row entered is Correct
+/* Checks if Row entered is Correct */
 bool GameEngine::checkRow(std::string input){
     int row;
     if (input.size() == 14){
@@ -425,7 +422,7 @@ bool GameEngine::checkRow(std::string input){
 }
 
 
-//Checks if Column entered is Correct
+/* Checks if Column entered is Correct */
 bool GameEngine::checkCol(char col){
     for (char i = 'A'; i <= 'O'; ++i){
         if (col == i){
@@ -436,7 +433,7 @@ bool GameEngine::checkCol(char col){
 }
 
 
-//Check Board Coordinated (Rows, Cols)
+/* Check Board Coordinated (Rows, Cols) */
 bool GameEngine::checkBoardCoordinates(std::string input){
 
     if(checkRow(input) && checkCol(input[11])){
@@ -446,7 +443,7 @@ bool GameEngine::checkBoardCoordinates(std::string input){
 }
 
 
-//Checks String entered is correct
+/* Checks String entered is correct */
 bool GameEngine::checksString(std::string input){
     if ((input.substr(0,5).compare("place") == 0) && (input.substr(8,2).compare("at") == 0)){
         return true;
@@ -455,7 +452,7 @@ bool GameEngine::checksString(std::string input){
 }
 
 
-//Checks Letter is present in Hand or not
+/* Checks Letter is present in Hand or not */
 bool GameEngine::checksLetterinHand(char c, LinkedList* hand){
     for (int i = 0; i < 7; ++i){
         if (c == hand->get(i)->getLetter()){
@@ -467,7 +464,7 @@ bool GameEngine::checksLetterinHand(char c, LinkedList* hand){
 }
 
 
-//Convert Char to Integer value
+/* Convert Char to Integer value */
 int GameEngine::convertChartoInt(char c){
     int j=0;
     for (char i = 'A'; i <= c; i++){
@@ -477,7 +474,7 @@ int GameEngine::convertChartoInt(char c){
 }
 
 
-//Convert Integer to Char
+/* Convert Integer to Char */
 char GameEngine::convertInttoChar(int i){
     char c = 'A';
     for (int j=0; j<=i; ++i){

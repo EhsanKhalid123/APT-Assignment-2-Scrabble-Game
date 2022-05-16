@@ -13,10 +13,13 @@ public:
    Value  value;
 
    Tile(Letter letter, Value value);
+   
    int getValue();
+
    char getLetter();
 
    void setValue(Value value);
+
    void setLetter(Letter letter);
 };
 
