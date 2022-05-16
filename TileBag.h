@@ -12,6 +12,7 @@ class TileBag {
         void shuffleArray(Tile* arr[], int n);
         Tile* get(int index);
         void clear();
+        void shuffle(Tile* tileBagarr, int length);
         // void display();
 
         

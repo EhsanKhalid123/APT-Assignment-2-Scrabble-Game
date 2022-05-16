@@ -2,6 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <time.h>
+#include <vector>
+#include <bits/stdc++.h>
 
 TileBag::TileBag(){
     std::ifstream tilesFile("ScrabbleTiles.txt");
@@ -20,26 +23,32 @@ TileBag::TileBag(){
         }
     }
 
-    std::random_device randomSeed;
-    std::uniform_int_distribution<int> uniform_dist(0, tempTileBag->size());
-    int i = 0;
-    while (i < tempTileBag->size()) {     
+    std::vector<int> numbers;
 
-        // Picks a random tile from the temporary Tile bag!!!!
-        int randTileIndex = uniform_dist(randomSeed);
-        if (tempTileBag->get(randTileIndex) != nullptr) {
-            
-            // Creates a new Tile based on the random picked tile from tempTileBag
-            Tile* tile = new Tile(*tempTileBag->get(randTileIndex));
+    for(int i=0; i<tempTileBag->size(); i++){      
+        numbers.push_back(i);
+    }   
 
-            // Adds the tile to the actual tileBag
-            tileBag->add_back(tile);
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(numbers.begin(), numbers.end(), std::default_random_engine(seed));
 
-            // Removes the tiles from temporary tile bag
-            tempTileBag->remove(randTileIndex);
-            ++i;
-        }
-    }
+    for(int i=0; i<tempTileBag->size(); i++){       
+        tileBag->add_back(tempTileBag->get(numbers[i]));
+    }   
+}
+
+void TileBag::shuffle(Tile* tileBagArr, int length){
+    std::vector<int> numbers;
+
+    for(int i=0; i<100; i++)       // add 0-99 to the vector
+        numbers.push_back(i);
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(numbers.begin(), numbers.end(), std::default_random_engine(seed));
+
+    for(int i=0; i<99; i++)        // print the first 40 randomly sorted numbers
+        std::cout << numbers[i] << std::endl;
+
 }
 
 //Tiles added at the end of Linked List
