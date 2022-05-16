@@ -239,7 +239,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                     file << "," << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue() << std::flush;
                 }
                 file.flush();
-                file << "" <<std::endl;
+                file << "" << std::endl;
                 file << player1->getPlayerName() << std::endl;
                 
                 //Game Ends

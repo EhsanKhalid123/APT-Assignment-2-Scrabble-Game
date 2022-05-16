@@ -114,7 +114,7 @@ void Menu::loadGameMenu(){
         while (!loadFile.eof()){
             std::getline(loadFile, str);
             //player 1 Name
-            if (counter<10){
+            if (counter<9){
                 data[counter] = str;
             }
             ++counter;
