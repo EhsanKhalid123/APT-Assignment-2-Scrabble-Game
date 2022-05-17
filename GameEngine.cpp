@@ -19,6 +19,8 @@ void GameEngine::loadGame(std::string savedData[]){
     // Setting player 1 Data
     int score1 = std::stoi(savedData[1]);
     LinkedList* hand1 = new LinkedList();
+
+    //Variables used for iteration to read players hand from saved file
     int letter_counter = -5;
     int value_counter = -3;
 
@@ -34,6 +36,7 @@ void GameEngine::loadGame(std::string savedData[]){
         hand1->add_back(tile);
     }
     
+    //Creating player 1
     Player* player1 = new Player(savedData[0], 1, score1, hand1);
 
     // Setting player 2 Data
@@ -53,19 +56,27 @@ void GameEngine::loadGame(std::string savedData[]){
         Tile* tile = new Tile(ch, value);
         hand2->add_back(tile);
     }
+
+    //Creating Player 2
     Player* player2 = new Player(savedData[3], 1, score2, hand2);
 
+    //Creating an empty Tile Bag
     tileBag = new TileBag();
     tileBag->clear();
     std::string str;
     std::istringstream iss(savedData[7]);
+
+    //Adding tiles to Tile Bag from saved file
     while (std::getline(iss, str, ',')){
         Tile* tile2 = new Tile(str[0], str[2]);
         tileBag->addTile(tile2);
     }
 
+    //Creating a New Board
     newBoard = new Board();
     std::istringstream iss2(savedData[6]);
+
+    //Adding already placed tiles to Board
     while (std::getline(iss2, str, ',')){
         Tile* tile3 = new Tile(str[0], 0);
         if (str.size() == 5){
@@ -125,7 +136,7 @@ void GameEngine::gameStarts(){
     newBoard = new Board();
     gameEnd = false;
 
-    // Setting Tiles in Player's Hands (Only for New Game)
+    // Setting Tiles in Both Player's Hands (Only for New Game)
     for (int i = 0; i < 7; ++i){
         player1->getPlayerHand()->add_front(tileBag->getTile());
         player2->getPlayerHand()->add_front(tileBag->getTile());
@@ -135,6 +146,7 @@ void GameEngine::gameStarts(){
     playerOneChance = true;
     playerTwoChance = false;
 
+    //Loop for playing Game
     while (gameEnd == false){
 
         // If tileBag is empty then game ends
@@ -149,6 +161,7 @@ void GameEngine::gameStarts(){
         
         else{
             // Checking for Turns
+            //When its Player one's chance
             if (playerOneChance == true){
                 if(playerPrompt(player1, player2)){
                     gameEnd = true;
@@ -158,6 +171,7 @@ void GameEngine::gameStarts(){
                     playerTwoChance = true;
                 }
             }
+            //When its Player two's chance
             else{
                 if(playerPrompt(player2, player1)){
                     gameEnd = true;
@@ -169,15 +183,38 @@ void GameEngine::gameStarts(){
             }
         }
     }
-    gameEnds(player1, player2);
+    if (gameSave == true){
+        gameSaves();
+    }
+    else if(gameQuit == true){
+        gameQuits();
+    }
+    else{
+        gameEnds(player1, player2);
+    }
 }
 
+//When players quits the game
+void GameEngine::gameQuits(){
+    std::cout<<"Goodbye"<<std::endl;
+}
+
+//When players saves the game
+void GameEngine::gameSaves(){
+    std::cout<<"Game Saved\nGoodbye"<<std::endl;
+}
 
 /* Commands for Players: Place Tile, Save, Pass, Replace & Quit */
 bool GameEngine::playerPrompt(Player* player1, Player* player2){
+
+    //Displays whose turn is now
     std::cout<<"\n"<<player1->getPlayerName()<<", it's your turn"<<std::endl;
+
+    //Displays the Score for each user
     std::cout<<"Score for "<<player1->getPlayerName()<<": "<<player1->getPlayerScore()<<std::endl;
     std::cout<<"Score for "<<player2->getPlayerName()<<": "<<player2->getPlayerScore()<<std::endl;
+
+    //Prints the updated Board
     newBoard->printBoard();
 
     // Displaying Tiles on player's Hand
@@ -185,45 +222,62 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
     player1->TilesonPlayersHands(player1);
 
     int placingCounter = 0;
-    // User placing tiles with command (loop)
     bool placeDone = false;
+
+    //Loop for player placing tile until placing is Done
     while (placeDone == false){
+
+        //Takes the Input from User
         std::string input;
         std::cout<<"> ";
         getline(std::cin>>std::ws, input);
+
         // For place Done
+        // If player has not placed anything and used place Done command then it will show a warning
         if (input == "place Done" && placingCounter == 0){
             std::cout<<"You have not placed anything"<<std::endl;
             placeDone = false;
         }
 
+        //Checks for the input
         else if(input == "place Done" && placingCounter > 0){
             placeDone = true;
         }
 
+        //Validates save input
         else if(input.substr(0,4) == "save"){
-            std::string output = input.substr(5,input.size()-4);
-            if(checkFileExists(output)){
-                std::ofstream file(output);
-                file << player1->getPlayerName() << std::endl;
-                file << player1->getPlayerScore() << std::endl;
 
+            //stores file name where the game is going to be saved
+            std::string output = input.substr(5,input.size()-4);
+
+            //Checks if file exists or not
+            if(checkFileExists(output)){
+
+                //Buffer initialised to write in the file
+                std::ofstream file(output);
+                //Writes Player one's Name
+                file << player1->getPlayerName() << std::endl;
+                //Writes Player one's Score
+                file << player1->getPlayerScore() << std::endl;
+                //Writes Player one's Hand
                 file << player1->getPlayerHand()->get(0)->getLetter()<<"-"<<player1->getPlayerHand()->get(0)->getValue();
                 for (int i = 1; i < player1->getPlayerHand()->size(); ++i){
                     file << ", "<< player1->getPlayerHand()->get(i)->getLetter()<<"-"<<player1->getPlayerHand()->get(i)->getValue();
                 }
                 file << std::endl;
 
+                //Writes Player two's Name
                 file << player2->getPlayerName() << std::endl;
+                //Write Player two's Score
                 file << player2->getPlayerScore() << std::endl;
-
+                //Write player two's Hand
                 file << player2->getPlayerHand()->get(0)->getLetter()<<"-"<<player2->getPlayerHand()->get(0)->getValue();
                 for (int i = 1; i < player2->getPlayerHand()->size(); ++i){
                     file << ", "<< player2->getPlayerHand()->get(i)->getLetter()<<"-"<<player2->getPlayerHand()->get(i)->getValue();
                 }
                 file << std::endl;
 
-                
+                //Write tiles placed on Board to file
                 for (int i = 0; i < ENV_DIM; ++i){
                     for (int j = 0; j < ENV_DIM; ++j){
                         if (newBoard->board[i][j] != nullptr){
@@ -234,24 +288,26 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 }
                 file << "" << std::endl;
 
+                //Writes Tiles left in Tile Bag to file
                 file << tileBag->get(0)->getLetter() << "-" << tileBag->get(0)->getValue() << std::flush;
                 for (int i = 1; i < tileBag->size; ++i){
                     file << "," << tileBag->get(i)->getLetter() << "-" << tileBag->get(i)->getValue() << std::flush;
                 }
                 file.flush();
                 file << "" << std::endl;
+
+                //Writes Player's name whose chance is going on
                 file << player1->getPlayerName() << std::endl;
                 
                 // Game Ends
-                std::cout<<"Game Saved\nGoodbye"<<std::endl;
-                exit(0);
+                gameSave = true;
+                return true;
             }
         }
 
         else if(input == "quit" || std::cin.eof()){
-            std::cout << "" << std::endl;
-            std::cout << "Goodbye" << std::endl;
-            exit(0);
+            gameQuit = true;
+            return true;
         }
 
         // For pass
@@ -371,7 +427,6 @@ Tile* GameEngine::getTileFromHand(char tileLetter, Player* player1){
     return tileToPlace;
 }
 
-
 /* Displays the Ending Messages */
 void GameEngine::gameEnds(Player* player1, Player* player2){
     std::cout<<"\nGame Over"<<std::endl;
@@ -389,7 +444,6 @@ void GameEngine::gameEnds(Player* player1, Player* player2){
     }
 
     std::cout<<"Goodbye"<<std::endl;
-    exit(0);
 }
 
 
