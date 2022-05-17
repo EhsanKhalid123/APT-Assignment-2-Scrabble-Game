@@ -114,7 +114,9 @@ void Menu::loadGameMenu(){
         savedGameEngine->loadGame(data);     
     }
     else {
+        std::cout << "" << std::endl;
         std::cout<<"Cannot Open File"<<std::endl;
+        mainMenu();
     }
 }
 

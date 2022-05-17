@@ -9,9 +9,13 @@ Menu
 4. Quit
 
 > 
-Enter the filename from which to load a game
+Starting a New Game
+
+Enter a name for Player 1 (uppercase characters only)
 > 
-Scrabble game successfully loaded
+Enter a name for Player 2 (uppercase characters only)
+> 
+Let's Play!
 
 TEST1, it's your turn
 Score for TEST1: 0
@@ -36,9 +40,5 @@ O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is
 O-1, E-1, E-1, O-1, G-2, I-1, O-1
 
-> 
-Game Over
-Score for TEST1: 0
-Score for TEST2: 0
-Player TEST2 won!
-Goodbye
+> You have not placed anything
+> Goodbye

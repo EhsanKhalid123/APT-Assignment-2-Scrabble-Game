@@ -10,4 +10,14 @@ Menu
 
 > 
 Enter the filename from which to load a game
-> Cannot Open File
+> 
+Cannot Open File
+
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits (Show student information)
+4. Quit
+
+> 
