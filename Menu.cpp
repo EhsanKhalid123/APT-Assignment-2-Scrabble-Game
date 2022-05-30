@@ -31,8 +31,7 @@ void Menu::mainMenu(){
     } else if (userMenuInput == 4) {
         helpMenu();
     } else if (userMenuInput == 5){
-        std::cout << "" << std::endl;
-        std::cout << "Goodbye" << std::endl;
+        Quit();
     } else {
         std::cout << "" << std::endl;
         std::cout << "Please Enter Only Numbers 1 - 5 or the command \"help\"" << std::endl;
@@ -42,6 +41,11 @@ void Menu::mainMenu(){
 
 /* Method to check for Lowercase user name input */
 void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
+
+        if (playerName == "help") {
+            std::cout << "◉ Please type your name using capital case" << std::endl;
+        }
+
         for(std::string::iterator pName = playerName.begin(); pName != playerName.end(); ++pName) {
             // Loop if name is lowercase
             while(islower(*pName)){
@@ -165,4 +169,9 @@ void Menu::helpMenu(){
     std::cout << "Enter Number 5 to Quit the Game" << std::endl;
     
     mainMenu();
+}
+
+void Menu::Quit (){
+    std::cout << "" << std::endl;
+    std::cout << "Goodbye" << std::endl;
 }

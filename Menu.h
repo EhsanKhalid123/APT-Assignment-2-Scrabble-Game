@@ -19,6 +19,8 @@ public:
 
     void helpMenu();
 
+    void Quit();
+
     static void checkForLower (std::string &playerName, std::string playerNumber);
 
 private:

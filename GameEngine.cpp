@@ -410,6 +410,8 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             // Help For Quiting Game
             std::cout << "◉ To Quit Game Use Command: \"quit\" or finish the game to end" << 
             " NOTE: The command should be exactly as shown" << std::endl;
+
+            std::cout << "" << std::endl;
         }
 
         else{
