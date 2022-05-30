@@ -76,9 +76,9 @@ void Player::setPlayerHand(LinkedList* hand){
 
 /* Shows the current tiles in players hand */
 void Player::TilesonPlayersHands(Player* player){
-    std::cout<<player->getPlayerHand()->get(0)->getLetter()<<"-"<<player->getPlayerHand()->get(0)->getValue();
+    std::cout<<"\033[33m" << player->getPlayerHand()->get(0)->getLetter()<<"-"<<player->getPlayerHand()->get(0)->getValue() << "\033[0m";
     for (int i = 1; i < 7; ++i){
-        std::cout<<", "<<player->getPlayerHand()->get(i)->getLetter()<<"-"<<player->getPlayerHand()->get(i)->getValue();
+        std::cout<< "\033[33m" << ", "<<player->getPlayerHand()->get(i)->getLetter()<<"-"<<player->getPlayerHand()->get(i)->getValue() << "\033[0m";
     }
     std::cout<<"\n"<<std::endl;
 }

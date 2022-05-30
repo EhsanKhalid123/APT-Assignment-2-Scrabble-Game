@@ -303,7 +303,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 gameSave = true;
                 return true;
             }
-        }
+        } 
 
         else if(input == "quit" || std::cin.eof()){
             gameQuit = true;
@@ -386,7 +386,32 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 player1->setPlayerScore(player1->getPlayerScore() + 50);
                 placeDone = true;
             }
+        } else if (input == "help") {
+            // Help For Place Tile
+            std::cout << "◉ To Place a Tile Use Command: \"place TileLetter at CoordinatesFromTheBoard\"" << 
+            " eg. place A at C2, NOTE: commands are case sensitive, they should be written exactly as shown! " << std::endl;
+
+            // Help For Save Game
+            std::cout << "◉ To Save Game Use Command: \"save FileName.txt\" eg. save game1.txt," << 
+            " NOTE: All lowercase characters and always include .txt" << std::endl;
+
+            // Help for Completing Turn
+            std::cout << "◉ To Complete Your Turn Use Command: \"place Done\"" << 
+            " NOTE: The command should be exactly as shown" << std::endl;
+
+            // Help For Passing
+            std::cout << "◉ To Pass Your Turn Use Command: \"pass\"" << 
+            " NOTE: The command should be exactly as shown" << std::endl;
+
+            // Help For Replacing Tiles
+            std::cout << "◉ To Replace a Tile Use Command: \"replace TileLetterFromHand\" eg. replace A" << 
+            " NOTE: The Tile You Are Replacing Must Be in Hand" << std::endl;
+
+            // Help For Quiting Game
+            std::cout << "◉ To Quit Game Use Command: \"quit\" or finish the game to end" << 
+            " NOTE: The command should be exactly as shown" << std::endl;
         }
+
         else{
             std::cout<<"Invalid Input"<<std::endl;
         }

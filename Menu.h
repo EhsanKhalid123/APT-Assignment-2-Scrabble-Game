@@ -17,6 +17,8 @@ public:
 
     void creditsMenu();
 
+    void helpMenu();
+
     static void checkForLower (std::string &playerName, std::string playerNumber);
 
 private:

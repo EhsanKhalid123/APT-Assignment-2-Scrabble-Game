@@ -16,7 +16,8 @@ void Menu::mainMenu(){
     std::cout << "1. New Game" << std::endl;
     std::cout << "2. Load Game" << std::endl;
     std::cout << "3. Credits (Show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
+    std::cout << "4. Help" << std::endl;
+    std::cout << "5. Quit" << std::endl;
     std::cout << "" << std::endl;
 
 /* Displays menu based on user input */
@@ -27,9 +28,14 @@ void Menu::mainMenu(){
         loadGameMenu();
     } else if (userMenuInput == 3){
         creditsMenu();
-    }else if (userMenuInput == 4){
+    } else if (userMenuInput == 4) {
+        helpMenu();
+    } else if (userMenuInput == 5){
         std::cout << "" << std::endl;
         std::cout << "Goodbye" << std::endl;
+    } else {
+        std::cout << "" << std::endl;
+        std::cout << "Please Enter Only Numbers 1 - 5 or the command \"help\"" << std::endl;
     }
 
 }
@@ -146,5 +152,17 @@ void Menu::creditsMenu(){
     std::cout << "----------------------------------" << std::endl;
 
     // Displays Main Menu
+    mainMenu();
+}
+
+void Menu::helpMenu(){
+    std::cout << "" << std::endl;
+    std::cout << "Please Enter Only Numbers From 1 - 5. Enter the number corressponding to each statement to select that option" << std::endl;
+    std::cout << "Enter Number 1 to Start a New Game" << std::endl;
+    std::cout << "Enter Number 2 to Load a Saved Game" << std::endl;
+    std::cout << "Enter Number 3 to See the Credits" << std::endl;
+    std::cout << "Enter Number 4 to See the Help Page" << std::endl;
+    std::cout << "Enter Number 5 to Quit the Game" << std::endl;
+    
     mainMenu();
 }

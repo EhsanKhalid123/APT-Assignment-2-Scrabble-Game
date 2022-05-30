@@ -44,7 +44,8 @@ void Board::printBoard(){
                 std::cout<<" |  ";
             }
             else{
-                std::cout<<" | "<< (char)this->board[i][j]->getLetter();
+                // "\033[33m" <- This Here Colours the Tiles \033 is escape character, 33 is ASCII Code for Colour Yellow
+                std::cout << " | " <<"\033[33m" << (char)this->board[i][j]->getLetter() << "\033[0m";
             }
         }
         std::cout<<" |"<<std::endl;
