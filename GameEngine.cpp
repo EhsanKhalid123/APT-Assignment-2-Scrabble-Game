@@ -207,7 +207,7 @@ void GameEngine::gameSaves(){
 
 /* Commands for Players: Place Tile, Save, Pass, Replace & Quit */
 bool GameEngine::playerPrompt(Player* player1, Player* player2){
-
+    errorMsg = false;
     // Displays whose turn is now
     std::cout<<"\n"<<player1->getPlayerName()<<", it's your turn"<<std::endl;
 
@@ -227,7 +227,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 
     // Loop for player placing tile until placing is Done
     while (placeDone == false){
-
+        errorMsg = false;
         // Takes the Input from User
         std::string input;
         std::cout<<"> ";
@@ -387,8 +387,7 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 player1->setPlayerScore(player1->getPlayerScore() + 50);
                 placeDone = true;
             }
-        } else if (enableEnhancement == true) {
-            if (input == "help"){
+        } else if (enableEnhancement == true && input == "help") {
 
             // Help For Place Tile
             std::cout << "◉ To Place a Tile Use Command: \"place TileLetter at CoordinatesFromTheBoard\"" << 
@@ -416,11 +415,18 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
 
             std::cout << "" << std::endl;
 
-            }
         }
 
         else{
-            std::cout<<"Invalid Input"<<std::endl;
+            if (enableEnhancement == true){
+                std::cout<<"Invalid Input"<<std::endl;
+                if(errorMsg == false) {    
+                    std::cout<<"Input does not match the Required Commands! Please type command \"help\" to see all available commands!"<<std::endl;
+                }
+            } else {
+                std::cout<<"Invalid Input"<<std::endl;
+            }
+            
         }
     }
     return false;
@@ -485,7 +491,7 @@ Checks for correct user input coordinated given */
 bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
     if(checksString(input) && checksLetterinHand(input[6], hand) && checkBoardCoordinates(input)){
         return true;
-    }
+    } 
     return false;
 }
 
@@ -524,6 +530,10 @@ bool GameEngine::checkBoardCoordinates(std::string input){
 
     if(checkRow(input) && checkCol(input[11])){
         return true;
+    } if (enableEnhancement == true) {
+        std::cout << "Board Coordinates Don't Exist: You can only enter A-O and 0-14" << std::endl;
+        errorMsg = true;
+        return false;
     }
     return false;
 }
@@ -545,7 +555,11 @@ bool GameEngine::checksLetterinHand(char c, LinkedList* hand){
             return true;
         }
     }
-    std::cout<<"Tile is not in Hand"<<std::endl;
+    if (enableEnhancement == true) {
+        std::cout<<"Tile is not in Hand"<<std::endl;
+        errorMsg = true;
+        return false;
+    }
     return false;
 }
 

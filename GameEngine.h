@@ -78,6 +78,7 @@ class GameEngine{
         bool playerOneChance;
         bool playerTwoChance;
         bool enableEnhancement;
+        bool errorMsg = false;
 };
 
 #endif // ASSIGN2_GAMEENGINE_H
