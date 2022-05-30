@@ -7,9 +7,27 @@
 
 /* Menu Class Constructor */
 Menu::Menu(){}
-    
+
+void Menu::enhancements(){
+    std::cout << "Would you like to enable enhancements (yes/no/quit)?" << std::endl;
+    std::cin >> enhancement;
+
+    if (enhancement == "yes"){
+        enhancementMenu();
+    } else if (enhancement == "no"){
+        mainMenu();
+    } else if (enhancement == "quit"){
+        Quit();
+    } else {
+        std::cout << "" << std::endl;
+        std::cout << "Please enter yes or no only!" << std::endl;
+        enhancements();
+    }
+
+}
+
 /* Displays Main Menu & Other Menus Based on User Input */
-void Menu::mainMenu(){
+void Menu::enhancementMenu(){
     std::cout << "" << std::endl;
     std::cout << "Menu" << std::endl;
     std::cout << "----" << std::endl;
@@ -23,7 +41,7 @@ void Menu::mainMenu(){
 /* Displays menu based on user input */
     std::cout << "> "; std::cin >> userMenuInput;
     if (userMenuInput == 1){
-        newGameMenu(); 
+        newGameMenu(true); 
     } else if (userMenuInput == 2){
         loadGameMenu();
     } else if (userMenuInput == 3){
@@ -35,6 +53,34 @@ void Menu::mainMenu(){
     } else {
         std::cout << "" << std::endl;
         std::cout << "Please Enter Only Numbers 1 - 5 or the command \"help\"" << std::endl;
+    }
+
+}
+    
+/* Displays Main Menu & Other Menus Based on User Input */
+void Menu::mainMenu(){
+    std::cout << "" << std::endl;
+    std::cout << "Menu" << std::endl;
+    std::cout << "----" << std::endl;
+    std::cout << "1. New Game" << std::endl;
+    std::cout << "2. Load Game" << std::endl;
+    std::cout << "3. Credits (Show student information)" << std::endl;
+    std::cout << "4. Quit" << std::endl;
+    std::cout << "" << std::endl;
+
+/* Displays menu based on user input */
+    std::cout << "> "; std::cin >> userMenuInput;
+    if (userMenuInput == 1){
+        newGameMenu(false); 
+    } else if (userMenuInput == 2){
+        loadGameMenu();
+    } else if (userMenuInput == 3){
+        creditsMenu();
+    } else if (userMenuInput == 4){
+        Quit();
+    } else {
+        std::cout << "" << std::endl;
+        std::cout << "Please Enter Only Numbers 1 - 4 or the command \"help\"" << std::endl;
     }
 
 }
@@ -61,7 +107,7 @@ void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
 }
 
 /* New Game Menu */
-void Menu::newGameMenu(){
+void Menu::newGameMenu(bool enableEnhancement){
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
     
@@ -89,7 +135,7 @@ void Menu::newGameMenu(){
     std::cout << "Let's Play!" << std::endl;
 
     // Calls the Start Game Method to begin game
-    GameEngine* gameEngine = new GameEngine(player1, player2);
+    GameEngine* gameEngine = new GameEngine(player1, player2, enableEnhancement);
     gameEngine->gameStarts();
  
 }
@@ -168,7 +214,7 @@ void Menu::helpMenu(){
     std::cout << "Enter Number 4 to See the Help Page" << std::endl;
     std::cout << "Enter Number 5 to Quit the Game" << std::endl;
     
-    mainMenu();
+    enhancementMenu();
 }
 
 void Menu::Quit (){

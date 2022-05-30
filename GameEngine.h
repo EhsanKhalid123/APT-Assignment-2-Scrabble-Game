@@ -17,7 +17,7 @@ class GameEngine{
         ~GameEngine();
         
         //Constructor for New Game
-        GameEngine(Player* player1, Player* player2);
+        GameEngine(Player* player1, Player* player2, bool enableEnhancement);
         
         //Handles Game Functioning
         void gameStarts();
@@ -77,6 +77,7 @@ class GameEngine{
         bool gameQuit = false;
         bool playerOneChance;
         bool playerTwoChance;
+        bool enableEnhancement;
 };
 
 #endif // ASSIGN2_GAMEENGINE_H

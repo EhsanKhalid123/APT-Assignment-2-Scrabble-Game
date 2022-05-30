@@ -9,9 +9,10 @@ GameEngine::GameEngine(){}
 GameEngine::~GameEngine() {}
 
 /* Constructor for New Game */
-GameEngine::GameEngine(Player* player1, Player* player2 ){
+GameEngine::GameEngine(Player* player1, Player* player2, bool enableEnhancement){
     this-> player1 = player1;
     this-> player2 = player2;    
+    this-> enableEnhancement = enableEnhancement;
 }
 
 /* Loads the saved games */
@@ -386,7 +387,9 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
                 player1->setPlayerScore(player1->getPlayerScore() + 50);
                 placeDone = true;
             }
-        } else if (input == "help") {
+        } else if (enableEnhancement == true) {
+            if (input == "help"){
+
             // Help For Place Tile
             std::cout << "◉ To Place a Tile Use Command: \"place TileLetter at CoordinatesFromTheBoard\"" << 
             " eg. place A at C2, NOTE: commands are case sensitive, they should be written exactly as shown! " << std::endl;
@@ -412,6 +415,8 @@ bool GameEngine::playerPrompt(Player* player1, Player* player2){
             " NOTE: The command should be exactly as shown" << std::endl;
 
             std::cout << "" << std::endl;
+
+            }
         }
 
         else{

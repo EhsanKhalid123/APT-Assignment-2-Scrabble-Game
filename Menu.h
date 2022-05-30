@@ -10,14 +10,18 @@ public:
     Menu();
 
     void mainMenu();
+    
+    void enhancementMenu();
 
-    void newGameMenu();
+    void newGameMenu(bool enableEnhancement);
 
     void loadGameMenu();
 
     void creditsMenu();
 
     void helpMenu();
+
+    void enhancements();
 
     void Quit();
 
@@ -28,6 +32,8 @@ private:
     std::string playerName;
     std::string playerName2;
     std::string fileName;
+    std::string enhancement;
+    bool enableEnhancement;
 };
 
 #endif // ASSIGN2_MENU_H

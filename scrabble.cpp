@@ -12,7 +12,7 @@ int main(void) {
 
    // Runs the Main Menu Method
    Menu* mainMenu = new Menu();
-   mainMenu->mainMenu();  
+   mainMenu->enhancements();  
 
 
    return EXIT_SUCCESS;
