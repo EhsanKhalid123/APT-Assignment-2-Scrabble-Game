@@ -18,15 +18,20 @@ class GameEngine{
         
         //Constructor for New Game
         GameEngine(Player* player1, Player* player2, bool enableEnhancement);
+
+        GameEngine(Player* player1, Player* player2, Player* player3, Player* player4, bool enableEnhancement);
         
         //Handles Game Functioning
         void gameStarts();
+        void gameStartsEnhancement();
         
         //Load Game from saved file
         void loadGame(std::string* savedData);
+        void loadGameEnhancement(std::string* savedData);
         
         //Handles the Ending of Game
         void gameEnds(Player* player1, Player* player2);
+        void gameEnds(Player* player1, Player* player2, Player* player3, Player* player4);
 
         //Validates Input
         bool checkInputforPlacing(std::string input, LinkedList* hand);
@@ -51,6 +56,7 @@ class GameEngine{
         
         //Handles game functioning
         bool playerPrompt(Player* player1, Player* player2);
+        bool playerPrompt(Player* player1, Player* player2, Player* player3, Player* player4);
        
        //Return Tiles from Players hands
         Tile* getTileFromHand(char tileLetter, Player* player);
@@ -72,11 +78,15 @@ class GameEngine{
         Board* newBoard;
         Player* player1;
         Player* player2;
+        Player* player3;
+        Player* player4;
         bool gameEnd = false;
         bool gameSave = false;
         bool gameQuit = false;
         bool playerOneChance;
         bool playerTwoChance;
+        bool playerThreeChance;
+        bool playerFourChance;
         bool enableEnhancement;
         bool errorMsg = false;
 };

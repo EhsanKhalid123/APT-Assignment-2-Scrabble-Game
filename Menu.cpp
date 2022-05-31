@@ -13,8 +13,10 @@ void Menu::enhancements(){
     std::cin >> enhancement;
 
     if (enhancement == "yes"){
+        enableEnhancement = true;
         enhancementMenu();
     } else if (enhancement == "no"){
+        enableEnhancement = false;
         mainMenu();
     } else if (enhancement == "quit"){
         Quit();
@@ -41,9 +43,16 @@ void Menu::enhancementMenu(){
 /* Displays menu based on user input */
     std::cout << "> "; std::cin >> userMenuInput;
     if (userMenuInput == 1){
-        newGameMenu(true); 
+        newGameMenu(enableEnhancement); 
     } else if (userMenuInput == 2){
-        loadGameMenu();
+        try {
+            loadGameMenuEnhancemnent();
+        } catch (std::exception &e) {
+            std::cout << "" << std::endl;
+            std::cout << "You are Trying to load a game that is without Enhancements" << std::endl;
+            std::cout << "To load this file, please play with enhancements disabled!" << std::endl;
+            enhancementMenu();
+        }
     } else if (userMenuInput == 3){
         creditsMenu();
     } else if (userMenuInput == 4) {
@@ -71,7 +80,7 @@ void Menu::mainMenu(){
 /* Displays menu based on user input */
     std::cout << "> "; std::cin >> userMenuInput;
     if (userMenuInput == 1){
-        newGameMenu(false); 
+        newGameMenu(enableEnhancement); 
     } else if (userMenuInput == 2){
         loadGameMenu();
     } else if (userMenuInput == 3){
@@ -108,6 +117,7 @@ void Menu::checkForLower (std::string &playerName, std::string playerNumber) {
 
 /* New Game Menu */
 void Menu::newGameMenu(bool enableEnhancement){
+
     std::cout << "" << std::endl;
     std::cout << "Starting a New Game" << std::endl;
     
@@ -131,13 +141,43 @@ void Menu::newGameMenu(bool enableEnhancement){
     LinkedList* hand2 = new LinkedList();
     Player* player2 = new Player(playerName2, 2, 0, hand2);
 
-    std::cout << "" << std::endl;
-    std::cout << "Let's Play!" << std::endl;
+    if (enableEnhancement == true){
+        std::cout << "" << std::endl;
+        // Player 3 Name Prompt
+        std::cout << "Enter a name for Player 3 (uppercase characters only)" << std::endl;
+        std::cout << "> "; std::cin >> playerName3;  
+        checkForLower(playerName3, "Player 3");
 
-    // Calls the Start Game Method to begin game
-    GameEngine* gameEngine = new GameEngine(player1, player2, enableEnhancement);
-    gameEngine->gameStarts();
- 
+        // Initialising a hand for a player
+        LinkedList* hand3 = new LinkedList();
+        Player* player3 = new Player(playerName3, 3, 0, hand3);
+        std::cout << "" << std::endl;
+
+        // Player 4 Name Prompt
+        std::cout << "Enter a name for Player 4 (uppercase characters only)" << std::endl;
+        std::cout << "> "; std::cin >> playerName4;  
+        checkForLower(playerName4, "Player 4");
+
+        // Initialising a hand for a player
+        LinkedList* hand4 = new LinkedList();
+        Player* player4 = new Player(playerName4, 4, 0, hand4);
+
+        std::cout << "" << std::endl;
+        std::cout << "Let's Play!" << std::endl;
+
+        GameEngine* gameEngine = new GameEngine(player1, player2, player3, player4, enableEnhancement);
+        gameEngine->gameStartsEnhancement();
+    }
+
+    if (enableEnhancement == false){
+        std::cout << "" << std::endl;
+        std::cout << "Let's Play!" << std::endl;
+
+        // Calls the Start Game Method to begin game
+        GameEngine* gameEngine = new GameEngine(player1, player2, enableEnhancement);
+        gameEngine->gameStarts();
+    }   
+
 }
 
 /* Load Game Menu */
@@ -157,10 +197,19 @@ void Menu::loadGameMenu(){
         while (!loadFile.eof()){
             std::getline(loadFile, str);
             // Stores the data from file into an array
-            if (counter<9){
+            
+            if (counter > 9){
+                std::cout << "" << std::endl;
+                std::cout << "You are Trying to load a game that has Enhancements enabled" << std::endl;
+                std::cout << "To load this file, please play with enhancements enabled!" << std::endl;
+                mainMenu();  
+            }
+
+            if (counter < 9){
                 data[counter] = str;
             }
             ++counter;
+            
         }
         std::cout << "" << std::endl;
         std::cout << "Scrabble game successfully loaded" << std::endl;
@@ -173,6 +222,42 @@ void Menu::loadGameMenu(){
         std::cout << "" << std::endl;
         std::cout<<"Cannot Open File"<<std::endl;
         mainMenu();
+    }
+}
+
+void Menu::loadGameMenuEnhancemnent(){
+    std::cout << "" << std::endl;
+    std::cout << "Enter the filename from which to load a game" << std::endl;
+    std::cout << "> "; std::cin >> fileName;
+    std::string str;
+    int counter = 0;
+
+    // Loads file
+    std::string data[15];
+    std::ifstream loadFile(fileName);
+
+    // Get data from file if file exists
+    if (!loadFile.fail()){
+        while (!loadFile.eof()){
+            std::getline(loadFile, str);
+            // Stores the data from file into an array
+            if (counter<15){
+                data[counter] = str;
+            }
+            ++counter;
+        }
+        std::cout << "" << std::endl;
+        std::cout << "Scrabble game successfully loaded" << std::endl;
+
+        // Calls load Game method to continue playing loaded game
+        GameEngine* savedGameEngine = new GameEngine();
+        savedGameEngine->loadGameEnhancement(data); 
+
+    }
+    else {
+        std::cout << "" << std::endl;
+        std::cout<<"Cannot Open File"<<std::endl;
+        enhancementMenu();
     }
 }
 
@@ -202,6 +287,9 @@ void Menu::creditsMenu(){
     std::cout << "----------------------------------" << std::endl;
 
     // Displays Main Menu
+    if(enableEnhancement == true){
+            enhancementMenu();
+    }
     mainMenu();
 }
 
