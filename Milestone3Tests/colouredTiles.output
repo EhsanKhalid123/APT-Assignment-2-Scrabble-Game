@@ -1,0 +1,51 @@
+Welcome to Scrabble!
+--------------------
+Would you like to enable enhancements (yes/no/quit)?
+
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits (Show student information)
+4. Help
+5. Quit
+
+> 
+Starting a New Game
+
+Enter a name for Player 1 (uppercase characters only)
+> 
+Enter a name for Player 2 (uppercase characters only)
+> 
+Enter a name for Player 3 (uppercase characters only)
+> 
+Enter a name for Player 4 (uppercase characters only)
+> 
+Let's Play!
+
+TEST1, it's your turn
+Score for TEST1: 0
+Score for TEST2: 0
+Score for TEST3: 0
+Score for TEST4: 0
+    0   1   2   3   4   5   6   7   8   9   10  11  12  13  14
+   ------------------------------------------------------------
+A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+B |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+Your hand is
+[33mU-1[0m[33m, U-1[0m[33m, D-2[0m[33m, D-2[0m[33m, D-2[0m[33m, F-4[0m[33m, B-3[0m
+
+> Goodbye

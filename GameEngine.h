@@ -12,6 +12,7 @@ class GameEngine{
     public:
         //Default Constructor
         GameEngine();
+        GameEngine(bool enableEnhancement);
         
         //De-constructor
         ~GameEngine();
@@ -66,6 +67,9 @@ class GameEngine{
         
         //Converts Integer to Character
         char convertInttoChar(int i);
+
+        // Checks for Input word from Dictionary/Word file 
+        bool checkWord(std::string input);
         
         //Handles Game Quitting
         void gameQuits();

@@ -1,0 +1,14 @@
+Welcome to Scrabble!
+--------------------
+Would you like to enable enhancements (yes/no/quit)?
+
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits (Show student information)
+4. Help
+5. Quit
+
+> 
+Please Enter Only Numbers 1 - 5 or the command "help"

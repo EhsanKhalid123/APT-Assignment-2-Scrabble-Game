@@ -5,6 +5,10 @@
 /* Default Constructor */
 GameEngine::GameEngine(){}
 
+GameEngine::GameEngine(bool enableEnhancement){
+    this-> enableEnhancement = enableEnhancement;
+}
+
 /* De-constructor */
 GameEngine::~GameEngine() {}
 
@@ -1082,6 +1086,33 @@ bool GameEngine::checkInputforPlacing(std::string input, LinkedList* hand){
     } 
     return false;
 }
+
+// bool GameEngine::checkWord(std::string input){
+//     bool retVal = false;
+//     char inputWord[] = {0};
+//     for (int i=0; i != '\0'; i++){
+//         inputWord[i] = {*input.c_str()};
+//     }
+//     const std::string cstr = inputWord;
+//     std::ifstream adjectiveFile("web2");
+
+//     std::string fileWord;
+//     while(adjectiveFile >> fileWord) {
+//             std::cout << cstr << std::endl;
+//         if (cstr.find(fileWord) != std::string::npos) {
+//             // std::cout << "The word " << input << " is in the file" << std::endl;
+//             retVal = true;
+//         } 
+//     }
+
+//     if (retVal == false){
+//         std::cout << "The word does not exist" << std::endl;
+//     }
+
+//     adjectiveFile.close();
+    
+//     return retVal;
+// }
 
 
 /* Checks if Row entered is Correct */

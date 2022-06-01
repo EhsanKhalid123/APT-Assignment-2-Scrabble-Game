@@ -202,7 +202,9 @@ void Menu::loadGameMenu(){
                 std::cout << "" << std::endl;
                 std::cout << "You are Trying to load a game that has Enhancements enabled" << std::endl;
                 std::cout << "To load this file, please play with enhancements enabled!" << std::endl;
-                mainMenu();  
+                
+                mainMenu(); 
+                return;
             }
 
             if (counter < 9){
@@ -250,7 +252,7 @@ void Menu::loadGameMenuEnhancemnent(){
         std::cout << "Scrabble game successfully loaded" << std::endl;
 
         // Calls load Game method to continue playing loaded game
-        GameEngine* savedGameEngine = new GameEngine();
+        GameEngine* savedGameEngine = new GameEngine(true);
         savedGameEngine->loadGameEnhancement(data); 
 
     }
@@ -305,7 +307,7 @@ void Menu::helpMenu(){
     enhancementMenu();
 }
 
-void Menu::Quit (){
+void Menu::Quit(){
     std::cout << "" << std::endl;
     std::cout << "Goodbye" << std::endl;
 }
