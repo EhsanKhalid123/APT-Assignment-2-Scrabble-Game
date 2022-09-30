@@ -1,2 +1,8 @@
-# APT-Assignment-2-Scrabble-Game
-Scrabble Game Implementation
+# Basic Console Scrabble Game
+
+
+# Developers:
+
+Ehsan Khalid
+Preet Choudhary
+Peter Mikhail
